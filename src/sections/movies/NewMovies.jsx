@@ -65,47 +65,47 @@ function NewMovies({handleClose}){
     async function submitHandler(e) {
         e.preventDefault();
     
-        // const formData = new FormData();
-        // formData.append('title', title);
-        // formData.append('rating', rating);
-        // formData.append('runtime', runtime);
-        // formData.append('genre', genre);
-        // formData.append('releaseDate', releaseDate);
-        // formData.append('director', director);
-        // formData.append('synopsis', synopsis);
-        // formData.append('language', language);
-        // formData.append('trailer', trailer);
-        // formData.append('postUrl', postUrl);
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('rating', rating);
+        formData.append('runtime', runtime);
+        formData.append('genre', genre);
+        formData.append('releaseDate', releaseDate);
+        formData.append('director', director);
+        formData.append('synopsis', synopsis);
+        formData.append('language', language);
+        formData.append('trailer', trailer);
+        formData.append('postUrl', postUrl);
         
-        // try {
-        //     const response = await axios.post(postURL, formData);
-        //     console.log(response);
-        //     handleClose(); 
-        // } catch (error) {
-        //     console.log(error);
-        // }
-
         try {
-            const response = await fetch(postURL, {
-                method: 'POST', 
-                body: JSON.stringify({
-                    "title": "1",
-                    "rating": "1",
-                    "runtime": "14:20",
-                    "genre": "720",
-                    "releaseDate": "2024-06-17",
-                    "director": "1",
-                    "synopsis": "1",
-                    "language": "1",
-                    "trailer": "1",
-                    "postUrl": "1"
-                })
-            })
-            const data = await response.json();
-            console.log(data);
+            const response = await axios.post(postURL, formData);
+            console.log(response);
+            handleClose(); 
         } catch (error) {
-            console.error('發生錯誤', error);
+            console.log(error);
         }
+
+        // try {
+        //     const response = await fetch(postURL, {
+        //         method: 'POST', 
+        //         body: JSON.stringify({
+        //             "title": "1",
+        //             "rating": "1",
+        //             "runtime": "14:20",
+        //             "genre": "720",
+        //             "releaseDate": "2024-06-17",
+        //             "director": "1",
+        //             "synopsis": "1",
+        //             "language": "1",
+        //             "trailer": "1",
+        //             "postUrl": "1"
+        //         })
+        //     })
+        //     const data = await response.json();
+        //     console.log(data);
+        // } catch (error) {
+        //     console.error('發生錯誤', error);
+        // }
     }
 
     return(
@@ -127,7 +127,7 @@ function NewMovies({handleClose}){
             </p>
             <p>
                 <label htmlFor="runtime">影片長度</label>
-                <input type="time" onChange={runtimeChangeHandler} required/>
+                <input type="text" onChange={runtimeChangeHandler} required/>
             </p>
             <p>
                 <label htmlFor="genre">影片類型</label>

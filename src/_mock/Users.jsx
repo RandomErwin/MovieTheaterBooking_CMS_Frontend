@@ -12,7 +12,7 @@ export const fetchUsers = async () => {
   }
 };
 
-// 待userData資料傳入 => 對抓取的資料做映射處理
+// 待程式被呼叫將userData資料傳入 => 對抓取的資料做映射處理
 export const getUsers = (userData) => {
   return userData.map(user => ({
     id: user.usersId,

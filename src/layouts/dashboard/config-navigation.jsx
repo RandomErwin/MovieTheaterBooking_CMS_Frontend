@@ -8,39 +8,34 @@ const icon = (name) => (
 
 const navConfig = [
   {
-    title: 'user',
-    path: '/user',
-    icon: icon('ic_user'),
-  },
-  {
-    title: 'order',
-    path: '/orders',
-    icon: icon('ic_user'),
-  },
-  {
-    title: 'movie',
+    title: '院線更新',
     path: '/movies',
     icon: icon('ic_cart'),
   },
   {
-    title: 'blog',
-    path: '/blog',
+    title: '會員列表',
+    path: '/users',
+    icon: icon('ic_user'),
+  },
+  {
+    title: '紅利點數',
+    path: '/bonus',
+    icon: icon('ic_user'),
+  },
+  {
+    title: '購買記錄',
+    path: '/payments',
+    icon: icon('ic_user'),
+  },
+  {
+    title: '退款記錄',
+    path: '/refunds',
+    icon: icon('ic_user'),
+  },
+  {
+    title: '評論審閱',
+    path: '/reviews',
     icon: icon('ic_blog'),
-  },
-  {
-    title: 'dashboard',
-    path: '/',
-    icon: icon('ic_analytics'),
-  },
-  {
-    title: 'login',
-    path: '/login',
-    icon: icon('ic_lock'),
-  },
-  {
-    title: 'Not found',
-    path: '/404',
-    icon: icon('ic_disabled'),
   },
 ];
 

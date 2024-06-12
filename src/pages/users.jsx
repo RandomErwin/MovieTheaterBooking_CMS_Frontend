@@ -1,17 +1,17 @@
 import { Helmet } from 'react-helmet-async';
 
-import { AppView } from 'src/sections/overview/view';
+import { UsersView } from 'src/sections/users/view';
 
 // ----------------------------------------------------------------------
 
-export default function AppPage() {
+export default function UserPage() {
   return (
     <>
       <Helmet>
-        <title> 首頁 </title>
+        <title> 會員資料 | Minimal UI </title>
       </Helmet>
 
-      <AppView />
+      <UsersView />
     </>
   );
 }

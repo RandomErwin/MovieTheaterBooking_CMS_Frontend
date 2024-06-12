@@ -1,17 +1,17 @@
 import { Helmet } from 'react-helmet-async';
 
-import { UserView } from 'src/sections/user/view';
+import { BonusView } from 'src/sections/bonus/view';
 
 // ----------------------------------------------------------------------
 
-export default function UserPage() {
+export default function BonusPage() {
   return (
     <>
       <Helmet>
-        <title> User | Minimal UI </title>
+        <title> 紅利點數 | Minimal UI </title>
       </Helmet>
 
-      <UserView />
+      <BonusView />
     </>
   );
 }

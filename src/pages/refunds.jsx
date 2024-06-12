@@ -1,17 +1,17 @@
 import { Helmet } from 'react-helmet-async';
 
-import { AppView } from 'src/sections/overview/view';
+import { RefundsView } from 'src/sections/refunds/view';
 
 // ----------------------------------------------------------------------
 
-export default function AppPage() {
+export default function RefundsPage() {
   return (
     <>
       <Helmet>
-        <title> 首頁 </title>
+        <title> 退款記錄 | Minimal UI </title>
       </Helmet>
 
-      <AppView />
+      <RefundsView />
     </>
   );
 }

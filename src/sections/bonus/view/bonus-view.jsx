@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
-import { fetchUsers, getUsers } from 'src/_mock/user.jsx';
+import { orders } from 'src/_mock/orders';
 
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
@@ -21,10 +21,11 @@ import UserTableHead from '../user-table-head';
 import TableEmptyRows from '../table-empty-rows';
 import UserTableToolbar from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
+// import axios from 'axios';
 
 // ----------------------------------------------------------------------
 
-export default function UserPage() {
+export default function BonusPage() {
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
@@ -37,18 +38,6 @@ export default function UserPage() {
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const [userData, setUserData] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetchUsers();
-      setUserData(getUsers(data));
-      setLoading(false);
-    };
-    fetchData();
-  }, []);
-
   const handleSort = (event, id) => {
     const isAsc = orderBy === id && order === 'asc';
     if (id !== '') {
@@ -59,7 +48,7 @@ export default function UserPage() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = userData.map((n) => n.name);
+      const newSelecteds = orders.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -98,22 +87,30 @@ export default function UserPage() {
     setFilterName(event.target.value);
   };
 
-  // 模板處理傳入資料
   const dataFiltered = applyFilter({
-    inputData: userData,
+    inputData: orders,
     comparator: getComparator(order, orderBy),
     filterName,
   });
 
   const notFound = !dataFiltered.length && !!filterName;
 
+  // const [addOrder, setAddOrder] = useState();
+
+  // const PostData = async () => {
+  //   const response = await axios.post('http://localhost:8080/order/createOrder')
+  // }
+
+
   return (
     <Container>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-        <Typography variant="h4">會員資料</Typography>
+        <Typography variant="h4">紅利點數</Typography>
 
-        <Button variant="contained" color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
-          新增會員
+        <Button variant="contained" color="inherit" 
+          onClick={() => {}}
+          startIcon={<Iconify icon="eva:plus-fill" />}>
+          新增點數
         </Button>
       </Stack>
 
@@ -130,17 +127,17 @@ export default function UserPage() {
               <UserTableHead
                 order={order}
                 orderBy={orderBy}
-                rowCount={userData.length}
+                rowCount={orders.length}
                 numSelected={selected.length}
                 onRequestSort={handleSort}
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
-                  { id: 'id', label: '序號' },
-                  { id: 'account', label: '帳號' },
-                  { id: 'passwd', label: '密碼' },
-                  { id: 'phone', label: '電話' },
-                  { id: 'email', label: 'Email' },
-                  { id: 'edit', label: '編輯' },
+                  { id: 'name', label: 'No' },
+                  { id: 'company', label: 'Payment_id' },
+                  { id: 'role', label: 'Bonus' },
+                  { id: 'isVerified', label: 'Modify_time' },
+                  { id: 'status', label: 'Status' },
+                  { id: '' },
                 ]}
               />
               <TableBody>
@@ -149,11 +146,12 @@ export default function UserPage() {
                   .map((row) => (
                     <UserTableRow
                       key={row.id}
-                      photo={row.account}
-                      account={row.account}
-                      passwd={row.passwd}
-                      phone={row.phone}
-                      email={row.email}
+                      name={row.name}
+                      role={row.role}
+                      status={row.status}
+                      company={row.company}
+                      avatarUrl={row.avatarUrl}
+                      isVerified={row.isVerified}
                       selected={selected.indexOf(row.name) !== -1}
                       handleClick={(event) => handleClick(event, row.name)}
                     />
@@ -161,7 +159,7 @@ export default function UserPage() {
 
                 <TableEmptyRows
                   height={77}
-                  emptyRows={emptyRows(page, rowsPerPage, userData.length)}
+                  emptyRows={emptyRows(page, rowsPerPage, orders.length)}
                 />
 
                 {notFound && <TableNoData query={filterName} />}
@@ -173,7 +171,7 @@ export default function UserPage() {
         <TablePagination
           page={page}
           component="div"
-          count={userData.length}
+          count={orders.length}
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
           rowsPerPageOptions={[5, 10, 25]}

@@ -1,17 +1,17 @@
 import { Helmet } from 'react-helmet-async';
 
-import { OrderView } from 'src/sections/orders/view';
+import { PaymentsView } from 'src/sections/payments/view';
 
 // ----------------------------------------------------------------------
 
-export default function OrderPage() {
+export default function PaymentsPage() {
   return (
     <>
       <Helmet>
-        <title> User | Minimal UI </title>
+        <title> 購買記錄 | Minimal UI </title>
       </Helmet>
 
-      <OrderView />
+      <PaymentsView />
     </>
   );
 }

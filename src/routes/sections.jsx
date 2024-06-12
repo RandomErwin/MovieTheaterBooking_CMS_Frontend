@@ -4,14 +4,12 @@ import { Outlet, Navigate, useRoutes } from 'react-router-dom';
 import DashboardLayout from 'src/layouts/dashboard';
 
 export const IndexPage = lazy(() => import('src/pages/app'));
-export const BlogPage = lazy(() => import('src/pages/blog'));
-export const UserPage = lazy(() => import('src/pages/user'));
-export const OrderPage = lazy(() => import('src/pages/orders'));
-export const LoginPage = lazy(() => import('src/pages/login'));
 export const MoviesPage = lazy(() => import('src/pages/movies'));
-export const Page404 = lazy(() => import('src/pages/page-not-found'));
-
-// ----------------------------------------------------------------------
+export const UsersPage = lazy(() => import('src/pages/users'));
+export const BonusPage = lazy(() => import('src/pages/bonus'));
+export const PaymentsPage = lazy(() => import('src/pages/payments'));
+export const RefundsPage = lazy(() => import('src/pages/refunds'));
+export const ReviewsPage = lazy(() => import('src/pages/reviews'));
 
 export default function Router() {
   const routes = useRoutes([
@@ -25,23 +23,13 @@ export default function Router() {
       ),
       children: [
         { element: <IndexPage />, index: true },
-        { path: 'user', element: <UserPage /> },
-        { path: 'orders', element: <OrderPage /> },
         { path: 'movies', element: <MoviesPage /> },
-        { path: 'blog', element: <BlogPage /> },
+        { path: 'users', element: <UsersPage /> },
+        { path: 'bonus', element: <BonusPage /> },
+        { path: 'payments', element: <PaymentsPage /> },
+        { path: 'refunds', element: <RefundsPage /> },
+        { path: 'reviews', element: <ReviewsPage /> },
       ],
-    },
-    {
-      path: 'login',
-      element: <LoginPage />,
-    },
-    {
-      path: '404',
-      element: <Page404 />,
-    },
-    {
-      path: '*',
-      element: <Navigate to="/404" replace />,
     },
   ]);
 

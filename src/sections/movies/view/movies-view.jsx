@@ -27,7 +27,7 @@ export default function MoviesView() {
     <Container>
 
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-        <Typography variant="h4">電影列表</Typography>
+        <Typography variant="h4">院線更新</Typography>
         <Button variant="contained" color="inherit" 
                 startIcon={<Iconify icon="eva:plus-fill" />} 
                 onClick={handleOpen}>新增電影

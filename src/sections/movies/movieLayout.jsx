@@ -71,6 +71,7 @@ const MovieLayout = () => {
       {movies.length > 0 ? (
           <div className='container' >
             {movies.map((movie, index) => (
+              // why it can't open the Modal
               <MovieCard key={index} movie={movie} onClick={() => openModal(movie)}/>
             ))}
           </div>
@@ -78,10 +79,8 @@ const MovieLayout = () => {
         ) : (
           <div className='empty'>
             <h2>No movie found</h2>
-          </div>
-          
-        )
-      }
+          </div>    
+      )}
 
     </div>
   )

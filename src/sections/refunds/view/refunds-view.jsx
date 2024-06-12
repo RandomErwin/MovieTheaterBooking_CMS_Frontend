@@ -23,9 +23,7 @@ import UserTableToolbar from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
 // import axios from 'axios';
 
-// ----------------------------------------------------------------------
-
-export default function UserPage() {
+export default function RefundsPage() {
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
@@ -105,12 +103,12 @@ export default function UserPage() {
   return (
     <Container>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-        <Typography variant="h4">Orders</Typography>
+        <Typography variant="h4">退款紀錄</Typography>
 
         <Button variant="contained" color="inherit" 
           onClick={() => {}}
           startIcon={<Iconify icon="eva:plus-fill" />}>
-          新增訂單
+          編輯付款
         </Button>
       </Stack>
 
