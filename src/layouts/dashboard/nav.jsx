@@ -47,12 +47,13 @@ export default function Nav({ openNav, onCloseNav }) {
         display: 'flex',
         borderRadius: 1.5,
         alignItems: 'center',
+        // 更改Logo背景顏色
         bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12),
       }}
     >
       <Avatar src={account.photoURL} alt="photoURL" />
 
-      <Box sx={{ ml: 2 }}>
+      <Box sx={{ ml: 5 }}>
         <Typography variant="subtitle2">{account.displayName}</Typography>
 
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
@@ -78,23 +79,6 @@ export default function Nav({ openNav, onCloseNav }) {
           src="/assets/illustrations/illustration_avatar.png"
           sx={{ width: 100, position: 'absolute', top: -50 }}
         />
-
-        <Box sx={{ textAlign: 'center' }}>
-          <Typography variant="h6">Get more?</Typography>
-
-          <Typography variant="body2" sx={{ color: 'text.secondary', mt: 1 }}>
-            From only $69
-          </Typography>
-        </Box>
-
-        <Button
-          href="https://material-ui.com/store/items/minimal-dashboard/"
-          target="_blank"
-          variant="contained"
-          color="inherit"
-        >
-          Upgrade to Pro
-        </Button>
       </Stack>
     </Box>
   );
@@ -174,14 +158,17 @@ function NavItem({ item }) {
       component={RouterLink}
       href={item.path}
       sx={{
-        minHeight: 44,
+        minHeight: 60,
         borderRadius: 0.75,
         typography: 'body2',
-        color: 'text.secondary',
+        color: '#fff',
+        fontSize: 18,
         textTransform: 'capitalize',
         fontWeight: 'fontWeightMedium',
+        fontFamily: "LXGW WenKai TC", // 修改 navigatebar 字型
+
         ...(active && {
-          color: 'primary.main',
+          color: '#FF5809',
           fontWeight: 'fontWeightSemiBold',
           bgcolor: (theme) => alpha(theme.palette.primary.main, 0.08),
           '&:hover': {
@@ -190,6 +177,7 @@ function NavItem({ item }) {
         }),
       }}
     >
+      {/* 修改icon大小 */}
       <Box component="span" sx={{ width: 24, height: 24, mr: 2 }}>
         {item.icon}
       </Box>

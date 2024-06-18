@@ -93,13 +93,6 @@ export default function RefundsPage() {
 
   const notFound = !dataFiltered.length && !!filterName;
 
-  // const [addOrder, setAddOrder] = useState();
-
-  // const PostData = async () => {
-  //   const response = await axios.post('http://localhost:8080/order/createOrder')
-  // }
-
-
   return (
     <Container>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>

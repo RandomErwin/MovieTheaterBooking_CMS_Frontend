@@ -3,6 +3,8 @@ import "./Movies.css"
 import MovieCard from './MovieCard'
 import { Modal, Box, Typography, Button  } from '@mui/material'
 
+// By ID or Title ?i => A valid IMDb ID (e.g. tt1285016)
+// Please note while both "i" and "t" are optional at least one argument is required.
 const API_URL = 'http://www.omdbapi.com/?i=tt3896198&apikey=40b365a3'
 const ICON_URL = 'https://gist.githubusercontent.com/adrianhajdin/997a8cdf94234e889fa47be89a4759f1/raw/f13e5a9a0d1e299696aa4a0fe3a0026fa2a387f7/search.svg'
 
@@ -13,6 +15,7 @@ const MovieLayout = () => {
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   const searchMovies = async (title) => {
+    // &s => 	Movie title to search for
     const response = await fetch(`${API_URL}&s=${title}`);
     const data = await response.json();
     setMovies(data.Search);
@@ -22,7 +25,7 @@ const MovieLayout = () => {
     searchMovies({searchTerm});
   }, []);
 
-  // 拿取資料 => 顯示電影資訊視窗 + 可編輯/刪除按鈕
+  // 拿取資料 => 待製作:顯示電影資訊視窗 + 可編輯/刪除按鈕
   const openModal = (movie) => {
     setSelectedMovie(movie); 
     setModalIsOpen(true);

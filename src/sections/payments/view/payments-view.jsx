@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -12,13 +13,14 @@ import TablePagination from '@mui/material/TablePagination';
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 import TableNoData from '../table-no-data';
-import UserTableRow from '../user-table-row';
+import PaymentTableRow from '../payments-table-row';
 import UserTableHead from '../user-table-head';
 import TableEmptyRows from '../table-empty-rows';
 import UserTableToolbar from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
 
 import { fetchPayments, getPayments } from 'src/_mock/Payments';
+import DetailWindow from './DetailWinow';
 
 export default function PaymentsPage() {
   const [page, setPage] = useState(0);
@@ -35,8 +37,8 @@ export default function PaymentsPage() {
   useEffect(() => {
     const fetchData = async () => {
       // 執行Post請求 => 將return的值放入變數data
-      // data傳入 getPayments做屬性映射
       const data = await fetchPayments();
+      // data傳入 getPayments做屬性映射
       setPaymentData(getPayments(data));
       setLoading(false);
     };
@@ -60,7 +62,6 @@ export default function PaymentsPage() {
     setSelected([]);
   };
 
-  // 翻頁功能
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
@@ -101,6 +102,16 @@ export default function PaymentsPage() {
 
   const notFound = !dataFiltered.length && !!filterName;
 
+  // 父層取得資料並show出畫面
+  const [detailShow, setDetailShow] = useState(false);
+  const [detailData, setDetailData] = useState('');
+  const PAYMENT_URL = 'http://localhost:8080/orders/getOrders';
+  const handleRowClick = async (orderNum) => {
+    const res = await axios.get(`${PAYMENT_URL}/${orderNum}`)
+    setDetailData(res.data);
+    setDetailShow(true);
+  }
+
   return (
     <Container>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
@@ -131,32 +142,36 @@ export default function PaymentsPage() {
                 onRequestSort={handleSort}
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
-                  // { id: 'paymentId', label: '序號' },
                   { id: 'orderNum', label: '訂單編號' },
+                  { id: 'userName', label: '會員' },
+                  { id: 'totalAmount', label: '交易金額' },
+                  { id: 'bonus', label: '紅利點數' },
                   { id: 'payway', label: '付款方式' },
-                  { id: 'payStatus', label: '交易狀態' },
-                  { id: 'payTime', label: '交易時間' },
-                  { id: 'method', label: '付款/退款' },
-                  { id: 'modifyTime', label: '異動時間' },
+                  { id: 'payStatus', label: '付款狀態' },
                 ]}
               />
+
               <TableBody>
                 {dataFiltered
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   // 根據 row.屬性名稱 放入TableRow
+                  // key={row.id}存在可以作為事件選擇標的
+                  // <PaymentTableRow> 具有以下多種屬性及方法
                   .map((row) => (
-                    <UserTableRow
-                      key={row.paymentId}
+                    <PaymentTableRow
+                      key={row.id}
                       orderNum={row.orderNum}
+                      userName={row.userName}
+                      totalAmount={row.totalAmount}
+                      bonus={row.bonus}
                       payway={row.payway}
                       payStatus={row.payStatus}
-                      payTime={row.payTime}
-                      method={row.method}
-                      modifyTime={row.modifyTime}
                       selected={selected.indexOf(row.name) !== -1}
                       handleClick={(event) => handleClick(event, row.name)}
+                      onRowClick={handleRowClick}
                     />
-                  ))}
+                  ))
+                }
 
                 <TableEmptyRows
                   height={77}
@@ -165,6 +180,15 @@ export default function PaymentsPage() {
 
                 {notFound && <TableNoData query={filterName} />}
               </TableBody>
+
+              {detailShow && (
+                <DetailWindow
+                  show = {detailShow}
+                  onHide={() => setDetailShow(false)}
+                  state="showing"
+                  data={detailData}
+                 />
+              )}
             </Table>
           </TableContainer>
         </Scrollbar>

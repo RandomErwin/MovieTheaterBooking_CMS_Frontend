@@ -126,12 +126,12 @@ export default function UsersPage() {
                 onRequestSort={handleSort}
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
-                  { id: 'id', label: '序號' },
+                  { id: 'nickName', label: '暱稱' },
                   { id: 'account', label: '帳號' },
-                  { id: 'passwd', label: '密碼' },
+                  { id: 'birthday', label: '生日' },
                   { id: 'phone', label: '電話' },
-                  { id: 'email', label: 'Email' },
-                  { id: 'edit', label: '編輯' },
+                  { id: 'email', label: '信箱' },
+                  { id: 'gender', label: '性別' },
                 ]}
               />
               <TableBody>
@@ -139,12 +139,13 @@ export default function UsersPage() {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => (
                     <UserTableRow
-                      key={row.id}
-                      photo={row.account}
+                      key={row.userId}
+                      nickName={row.nickName}
                       account={row.account}
-                      passwd={row.passwd}
+                      birthday={row.birthday}
                       phone={row.phone}
                       email={row.email}
+                      gender={row.gender}
                       selected={selected.indexOf(row.name) !== -1}
                       handleClick={(event) => handleClick(event, row.name)}
                     />

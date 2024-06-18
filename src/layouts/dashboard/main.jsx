@@ -21,6 +21,8 @@ export default function Main({ children, sx, ...other }) {
         minHeight: 1,
         display: 'flex',
         flexDirection: 'column',
+        // 修改標題文字顏色
+        color: '#fff',
         py: `${HEADER.H_MOBILE + SPACING}px`,
         ...(lgUp && {
           px: 2,

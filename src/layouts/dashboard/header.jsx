@@ -39,8 +39,6 @@ export default function Header({ onOpenNav }) {
       <Box sx={{ flexGrow: 1 }} />
 
       <Stack direction="row" alignItems="center" spacing={1}>
-        <LanguagePopover />
-        <NotificationsPopover />
         <AccountPopover />
       </Stack>
     </>
@@ -53,7 +51,8 @@ export default function Header({ onOpenNav }) {
         height: HEADER.H_MOBILE,
         zIndex: theme.zIndex.appBar + 1,
         ...bgBlur({
-          color: theme.palette.background.default,
+          // header 顏色
+          // color: theme.palette.background.default,
         }),
         transition: theme.transitions.create(['height'], {
           duration: theme.transitions.duration.shorter,

@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-
 import Stack from '@mui/material/Stack';
-import Avatar from '@mui/material/Avatar';
 import Popover from '@mui/material/Popover';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
@@ -10,18 +8,12 @@ import MenuItem from '@mui/material/MenuItem';
 import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-
-import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 
-// ----------------------------------------------------------------------
-
-export default function UserTableRow({
+export default function BonusTableRow({
   orderNum,
-  payway,
-  payStatus,
-  payTime,
-  method,
+  userName,
+  bonus,
   modifyTime,
   selected,
   handleClick,
@@ -52,15 +44,23 @@ export default function UserTableRow({
           </Stack>
         </TableCell>
 
-        <TableCell>{payway}</TableCell>
+        <TableCell>
+          <Typography variant="subtitle2" noWrap>
+            {userName}
+          </Typography>
+        </TableCell>
 
-        <TableCell>{payStatus}</TableCell>
+        <TableCell>
+          <Typography variant="subtitle2" noWrap>
+            {bonus}
+          </Typography>
+        </TableCell>
 
-        <TableCell>{payTime}</TableCell>
-
-        <TableCell>{method}</TableCell>
-
-        <TableCell>{modifyTime}</TableCell>
+        <TableCell>
+          <Typography variant="subtitle2" noWrap>
+            {modifyTime}
+          </Typography>
+        </TableCell>
 
         <TableCell align="right">
           <IconButton onClick={handleOpenMenu}>
@@ -93,13 +93,11 @@ export default function UserTableRow({
   );
 }
 
-UserTableRow.propTypes = {
+BonusTableRow.propTypes = {
   orderNum: PropTypes.any,
-  payway: PropTypes.any,
-  payStatus: PropTypes.any,
-  payTime: PropTypes.any,
-  method: PropTypes.any,
+  userName: PropTypes.any,
+  bonus: PropTypes.any,
   modifyTime: PropTypes.any,
-  handleClick: PropTypes.func,
   selected: PropTypes.any,
+  handleClick: PropTypes.func,
 };

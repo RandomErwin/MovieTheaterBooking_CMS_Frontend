@@ -56,6 +56,7 @@ export const typography = {
     fontWeight: 700,
     lineHeight: 1.5,
     fontSize: pxToRem(20),
+    fontFamily: "LXGW WenKai TC",
     ...responsiveFontSizes({ sm: 20, md: 24, lg: 24 }),
   },
   h5: {
@@ -74,19 +75,28 @@ export const typography = {
     fontWeight: 600,
     lineHeight: 1.5,
     fontSize: pxToRem(16),
+    fontFamily: "LXGW WenKai TC",
   },
+  // 修改Table內文字大小
   subtitle2: {
     fontWeight: 600,
     lineHeight: 22 / 14,
-    fontSize: pxToRem(14),
+    fontSize: 16,
+    color: '#fff',
+    fontFamily: "LXGW WenKai TC",
   },
+  // 對全域使用body1的物件更改其屬性
   body1: {
     lineHeight: 1.5,
-    fontSize: pxToRem(16),
+    fontSize: 18,
+    fontFamily: "LXGW WenKai TC",
   },
+  // 修改Table標頭文字大小
   body2: {
     lineHeight: 22 / 14,
-    fontSize: pxToRem(14),
+    fontSize: 18,
+    fontFamily: "LXGW WenKai TC",
+    color: '#FF5809',
   },
   caption: {
     lineHeight: 1.5,

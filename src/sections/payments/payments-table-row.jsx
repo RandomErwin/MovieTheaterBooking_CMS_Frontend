@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-
 import Stack from '@mui/material/Stack';
-import Avatar from '@mui/material/Avatar';
 import Popover from '@mui/material/Popover';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
@@ -10,21 +8,19 @@ import MenuItem from '@mui/material/MenuItem';
 import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-
-import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 
-// ----------------------------------------------------------------------
-
-export default function UserTableRow({
+// 傳遞參數(id, orderNum, ...) 
+export default function PaymentTableRow({
+  orderNum,
+  userName,
+  totalAmount,
+  bonus,
+  payway,
+  payStatus,
   selected,
-  name,
-  avatarUrl,
-  company,
-  role,
-  isVerified,
-  status,
   handleClick,
+  onRowClick,
 }) {
   const [open, setOpen] = useState(null);
 
@@ -36,30 +32,54 @@ export default function UserTableRow({
     setOpen(null);
   };
 
+  const handleDetail = (event) => {
+    onRowClick(orderNum); //直接拿到orderNum => onRowClick接收參數
+  }
+  // 控制點 onclick={} 在子層<TableRow onClick={handleDetail}> 
   return (
     <>
-      <TableRow hover tabIndex={-1} role="checkbox" selected={selected}>
+      <TableRow hover tabIndex={-1} role="checkbox" selected={selected} onClick={handleDetail}>
+
         <TableCell padding="checkbox">
           <Checkbox disableRipple checked={selected} onChange={handleClick} />
         </TableCell>
 
         <TableCell component="th" scope="row" padding="none">
           <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar alt={name} src={avatarUrl} />
             <Typography variant="subtitle2" noWrap>
-              {name}
+              {orderNum}
             </Typography>
           </Stack>
         </TableCell>
 
-        <TableCell>{company}</TableCell>
-
-        <TableCell>{role}</TableCell>
-
-        <TableCell align="center">{isVerified ? 'Yes' : 'No'}</TableCell>
+        <TableCell>
+          <Typography variant="subtitle2" noWrap>
+            {userName}
+          </Typography> 
+        </TableCell>
 
         <TableCell>
-          <Label color={(status === 'banned' && 'error') || 'success'}>{status}</Label>
+          <Typography variant="subtitle2" noWrap>
+            {totalAmount}
+          </Typography>
+        </TableCell>
+
+        <TableCell>
+          <Typography variant="subtitle2" noWrap>
+            {bonus}
+          </Typography>
+        </TableCell>
+
+        <TableCell>
+          <Typography variant="subtitle2" noWrap>
+            {payway}
+          </Typography>
+        </TableCell>
+
+        <TableCell>
+          <Typography variant="subtitle2" noWrap>
+            {payStatus}
+          </Typography>
         </TableCell>
 
         <TableCell align="right">
@@ -93,13 +113,14 @@ export default function UserTableRow({
   );
 }
 
-UserTableRow.propTypes = {
-  avatarUrl: PropTypes.any,
-  company: PropTypes.any,
+PaymentTableRow.propTypes = {
+  orderNum: PropTypes.any,
+  userName: PropTypes.any,
+  totalAmount: PropTypes.any,
+  bonus: PropTypes.any,
+  payway: PropTypes.any,
+  payStatus: PropTypes.any,
   handleClick: PropTypes.func,
-  isVerified: PropTypes.any,
-  name: PropTypes.any,
-  role: PropTypes.any,
+  handleDetail: PropTypes.func,
   selected: PropTypes.any,
-  status: PropTypes.string,
 };

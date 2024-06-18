@@ -110,10 +110,9 @@ export function palette() {
       secondary: grey[600],
       disabled: grey[500],
     },
+    // table 位置的背景色
     background: {
-      paper: '#FFFFFF',
-      default: grey[100],
-      neutral: grey[200],
+      paper: '#0000',
     },
     action: {
       ...base.action,

@@ -16,10 +16,12 @@ export const fetchUsers = async () => {
 export const getUsers = (userData) => {
   return userData.map(user => ({
     id: user.usersId,
+    nickName: user.nickName,
     account: user.account,
-    passwd: user.passwd,
+    birthday: user.birthday,
     phone: user.phone,
     email: user.email,
+    gender: user.gender,
   }));
 };
     

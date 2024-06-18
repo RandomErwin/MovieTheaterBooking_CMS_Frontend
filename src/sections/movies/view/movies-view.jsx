@@ -8,19 +8,16 @@ import Button from '@mui/material/Button';
 // import ProductCard from '../product-card';
 import Iconify from 'src/components/iconify';
 import NewMovies from '../NewMovies';
+import MovieSearch from '../MovieSearch';
 import MovieLayout from '../movieLayout';
 
 
-// ----------------------------------------------------------------------
-
 export default function MoviesView() {
-  const [showList, setShowList] = useState(false);
+  const[listShow, setListShow] = useState(false);
 
+  // 新增電影按鈕在此層
   const handleOpen = () => {
-    setShowList(true);
-  }
-  const handleClose = () => {
-    setShowList(false);
+    setListShow(true);
   }
 
   return (
@@ -34,20 +31,17 @@ export default function MoviesView() {
         </Button>
       </Stack>
       
-      {showList && (
-        <NewMovies handleClose={handleClose}></NewMovies>
+      {listShow && (
+        <NewMovies 
+          show= {listShow}
+          onHide={() => setListShow(false)}
+          state="showing" 
+        />
       )}
 
-      <MovieLayout /> 
-
-      {/* <Grid container spacing={3}>        
-        {movies.map((product) => (
-          <Grid key={product.id} xs={12} sm={6} md={3}>
-            <ProductCard product={product} />
-          </Grid>
-        ))}
-
-      </Grid> */}
+      <MovieSearch />
+      
+      <MovieLayout />
 
     </Container>
   );

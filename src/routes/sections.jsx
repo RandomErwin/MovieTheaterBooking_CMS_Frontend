@@ -22,7 +22,7 @@ export default function Router() {
         </DashboardLayout>
       ),
       children: [
-        { element: <IndexPage />, index: true },
+        { element: <MoviesPage />, index: true },
         { path: 'movies', element: <MoviesPage /> },
         { path: 'users', element: <UsersPage /> },
         { path: 'bonus', element: <BonusPage /> },

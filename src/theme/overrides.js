@@ -22,6 +22,7 @@ export function overrides(theme) {
           padding: 0,
           width: '100%',
           height: '100%',
+          backgroundColor: '#000',
         },
         '#root': {
           width: '100%',
@@ -63,7 +64,7 @@ export function overrides(theme) {
           color: theme.palette.common.white,
           backgroundColor: theme.palette.grey[800],
           '&:hover': {
-            color: theme.palette.common.white,
+            color: '#FF5809',
             backgroundColor: theme.palette.grey[800],
           },
         },
@@ -84,7 +85,7 @@ export function overrides(theme) {
     },
     MuiCardHeader: {
       defaultProps: {
-        titleTypographyProps: { variant: 'h6' },
+        titleTypographyProps: { variant: 'h5' },
         subheaderTypographyProps: { variant: 'body2' },
       },
       styleOverrides: {
@@ -106,11 +107,12 @@ export function overrides(theme) {
       defaultProps: {
         elevation: 0,
       },
+      // change table background color
     },
     MuiTableCell: {
       styleOverrides: {
         head: {
-          color: theme.palette.text.secondary,
+          color: '#FF5809',
           backgroundColor: theme.palette.background.neutral,
         },
       },

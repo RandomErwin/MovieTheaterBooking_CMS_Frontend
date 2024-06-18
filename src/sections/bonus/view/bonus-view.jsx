@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -9,34 +9,37 @@ import TableBody from '@mui/material/TableBody';
 import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
-
-import { orders } from 'src/_mock/orders';
-
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
-
 import TableNoData from '../table-no-data';
-import UserTableRow from '../user-table-row';
+import BonusTableRow from '../bonus-table-row';
 import UserTableHead from '../user-table-head';
 import TableEmptyRows from '../table-empty-rows';
 import UserTableToolbar from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
-// import axios from 'axios';
 
-// ----------------------------------------------------------------------
+import { fetchBonus, getBonus } from 'src/_mock/Bonus';
 
 export default function BonusPage() {
   const [page, setPage] = useState(0);
-
   const [order, setOrder] = useState('asc');
-
   const [selected, setSelected] = useState([]);
-
   const [orderBy, setOrderBy] = useState('name');
-
   const [filterName, setFilterName] = useState('');
-
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const [bonusData, setBonusData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchBonus();
+      // 將所有資料做映射 => 放入setBonusData
+      setBonusData(getBonus(data));
+      setLoading(false);
+    };
+    fetchData();
+  }, []);
 
   const handleSort = (event, id) => {
     const isAsc = orderBy === id && order === 'asc';
@@ -48,7 +51,7 @@ export default function BonusPage() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = orders.map((n) => n.name);
+      const newSelecteds = bonusData.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -88,19 +91,12 @@ export default function BonusPage() {
   };
 
   const dataFiltered = applyFilter({
-    inputData: orders,
+    inputData: bonusData,
     comparator: getComparator(order, orderBy),
     filterName,
   });
 
   const notFound = !dataFiltered.length && !!filterName;
-
-  // const [addOrder, setAddOrder] = useState();
-
-  // const PostData = async () => {
-  //   const response = await axios.post('http://localhost:8080/order/createOrder')
-  // }
-
 
   return (
     <Container>
@@ -127,31 +123,27 @@ export default function BonusPage() {
               <UserTableHead
                 order={order}
                 orderBy={orderBy}
-                rowCount={orders.length}
+                rowCount={bonusData.length}
                 numSelected={selected.length}
                 onRequestSort={handleSort}
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
-                  { id: 'name', label: 'No' },
-                  { id: 'company', label: 'Payment_id' },
-                  { id: 'role', label: 'Bonus' },
-                  { id: 'isVerified', label: 'Modify_time' },
-                  { id: 'status', label: 'Status' },
-                  { id: '' },
+                  { id: 'orderNum', label: '訂單編號' },
+                  { id: 'userName', label: '會員姓名' },
+                  { id: 'bonus', label: '紅利點數' },
+                  { id: 'modifyTime', label: '建立時間' },
                 ]}
               />
               <TableBody>
                 {dataFiltered
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => (
-                    <UserTableRow
+                    <BonusTableRow
                       key={row.id}
-                      name={row.name}
-                      role={row.role}
-                      status={row.status}
-                      company={row.company}
-                      avatarUrl={row.avatarUrl}
-                      isVerified={row.isVerified}
+                      orderNum={row.orderNum}
+                      userName={row.userName}
+                      bonus={row.bonus}
+                      modifyTime={row.modifyTime}
                       selected={selected.indexOf(row.name) !== -1}
                       handleClick={(event) => handleClick(event, row.name)}
                     />
@@ -159,7 +151,7 @@ export default function BonusPage() {
 
                 <TableEmptyRows
                   height={77}
-                  emptyRows={emptyRows(page, rowsPerPage, orders.length)}
+                  emptyRows={emptyRows(page, rowsPerPage, bonusData.length)}
                 />
 
                 {notFound && <TableNoData query={filterName} />}
@@ -171,7 +163,7 @@ export default function BonusPage() {
         <TablePagination
           page={page}
           component="div"
-          count={orders.length}
+          count={bonusData.length}
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
           rowsPerPageOptions={[5, 10, 25]}

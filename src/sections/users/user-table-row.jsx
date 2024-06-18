@@ -12,14 +12,13 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Iconify from 'src/components/iconify';
 
-const ICON_URL = 'https://gist.githubusercontent.com/adrianhajdin/997a8cdf94234e889fa47be89a4759f1/raw/f13e5a9a0d1e299696aa4a0fe3a0026fa2a387f7/search.svg'
-
 export default function UserTableRow({
-  photo,
+  nickName,
   account,
-  passwd,
+  birthday,
   phone,
   email,
+  gender,
   selected,
   handleClick,
 }) {
@@ -42,20 +41,41 @@ export default function UserTableRow({
 
         <TableCell component="th" scope="row" padding="none">
           <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar alt={photo} src={ICON_URL} />
             <Typography variant="subtitle2" noWrap>
-              {account}
+              {nickName}
             </Typography>
           </Stack>
         </TableCell>
 
-        <TableCell>{account}</TableCell>
+        <TableCell>
+          <Typography variant="subtitle2" noWrap>
+            {account}
+          </Typography>
+        </TableCell>
 
-        <TableCell>{passwd}</TableCell>
+        <TableCell>
+          <Typography variant="subtitle2" noWrap>
+            {birthday}
+          </Typography>
+        </TableCell>
 
-        <TableCell>{phone}</TableCell>
+        <TableCell>
+          <Typography Typography variant="subtitle2" noWrap>
+            {phone}
+          </Typography>
+        </TableCell>
 
-        <TableCell>{email}</TableCell>
+        <TableCell>
+          <Typography variant="subtitle2" noWrap>
+            {email}
+          </Typography>
+        </TableCell>
+
+        <TableCell>
+          <Typography variant="subtitle2" noWrap>
+            {gender}
+          </Typography>
+        </TableCell>
 
         <TableCell align="right">
           <IconButton onClick={handleOpenMenu}>
@@ -90,11 +110,12 @@ export default function UserTableRow({
 }
 
 UserTableRow.propTypes = {
-  photo: PropTypes.any,
+  nickName: PropTypes.any,
   account: PropTypes.any,
-  passwd: PropTypes.any,
+  birthday: PropTypes.any,
   phone: PropTypes.any,
   email: PropTypes.any,
+  gender: PropTypes.any,
   selected: PropTypes.any,
   handleClick: PropTypes.func,
 };
