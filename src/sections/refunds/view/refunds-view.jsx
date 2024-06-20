@@ -1,5 +1,5 @@
-import { useState } from 'react';
-
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
@@ -9,32 +9,37 @@ import TableBody from '@mui/material/TableBody';
 import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
-
-import { orders } from 'src/_mock/orders';
-
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
-
 import TableNoData from '../table-no-data';
-import UserTableRow from '../user-table-row';
+import RefundTableRow from '../refunds-table-row';
 import UserTableHead from '../user-table-head';
 import TableEmptyRows from '../table-empty-rows';
 import UserTableToolbar from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
-// import axios from 'axios';
+
+import { fetchRefunds, getRefunds } from 'src/_mock/refunds';
+import DetailWindow from './DetailWinow';
 
 export default function RefundsPage() {
   const [page, setPage] = useState(0);
-
   const [order, setOrder] = useState('asc');
-
   const [selected, setSelected] = useState([]);
-
   const [orderBy, setOrderBy] = useState('name');
-
   const [filterName, setFilterName] = useState('');
-
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const [refundData, setRefundData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchRefunds();
+      setRefundData(getRefunds(data));
+      setLoading(false);
+    }
+    fetchData();
+  }, []);
 
   const handleSort = (event, id) => {
     const isAsc = orderBy === id && order === 'asc';
@@ -46,7 +51,7 @@ export default function RefundsPage() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = orders.map((n) => n.name);
+      const newSelecteds = refundData.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -86,12 +91,21 @@ export default function RefundsPage() {
   };
 
   const dataFiltered = applyFilter({
-    inputData: orders,
+    inputData: refundData,
     comparator: getComparator(order, orderBy),
     filterName,
   });
 
   const notFound = !dataFiltered.length && !!filterName;
+
+  const [detailShow, setDetailShow] = useState(false);
+  const [detailData, setDetailData] = useState('');
+  const PAYMENT_URL = 'http://localhost:8080/orders/getOrders';
+  const handleRowClick = async (orderNum) => {
+    const res = await axios.get(`${PAYMENT_URL}/${orderNum}/refund`)
+    setDetailData(res.data);
+    setDetailShow(true);
+  }
 
   return (
     <Container>
@@ -101,7 +115,7 @@ export default function RefundsPage() {
         <Button variant="contained" color="inherit" 
           onClick={() => {}}
           startIcon={<Iconify icon="eva:plus-fill" />}>
-          編輯付款
+          變更退款
         </Button>
       </Stack>
 
@@ -118,43 +132,53 @@ export default function RefundsPage() {
               <UserTableHead
                 order={order}
                 orderBy={orderBy}
-                rowCount={orders.length}
+                rowCount={refundData.length}
                 numSelected={selected.length}
                 onRequestSort={handleSort}
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
-                  { id: 'name', label: 'No' },
-                  { id: 'company', label: 'Payment' },
-                  { id: 'role', label: 'Price' },
-                  { id: 'isVerified', label: 'Status', align: 'center' },
-                  { id: 'status', label: 'Date' },
-                  { id: '' },
+                  { id: 'naorderNumme', label: '訂單編號' },
+                  { id: 'userName', label: '會員' },
+                  { id: 'totalAmount', label: '交易金額' },
+                  { id: 'bonus', label: '紅利點數'},
+                  { id: 'payway', label: '退款方式' },
+                  { id: 'payStatus', label: '退款狀態' },
                 ]}
               />
               <TableBody>
                 {dataFiltered
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => (
-                    <UserTableRow
+                    <RefundTableRow
                       key={row.id}
-                      name={row.name}
-                      role={row.role}
-                      status={row.status}
-                      company={row.company}
-                      avatarUrl={row.avatarUrl}
-                      isVerified={row.isVerified}
+                      orderNum={row.orderNum}
+                      userName={row.userName}
+                      totalAmount={row.totalAmount}
+                      bonus={row.bonus}
+                      payway={row.payway}
+                      payStatus={row.payStatus}
                       selected={selected.indexOf(row.name) !== -1}
                       handleClick={(event) => handleClick(event, row.name)}
+                      onRowClick={handleRowClick}
                     />
                   ))}
 
                 <TableEmptyRows
                   height={77}
-                  emptyRows={emptyRows(page, rowsPerPage, orders.length)}
+                  emptyRows={emptyRows(page, rowsPerPage, refundData.length)}
                 />
 
                 {notFound && <TableNoData query={filterName} />}
               </TableBody>
+
+              {detailShow && (
+                <DetailWindow
+                  show = {detailShow}
+                  onHide={() => setDetailShow(false)}
+                  state="showing"
+                  data={detailData}
+                 />
+              )}
             </Table>
           </TableContainer>
         </Scrollbar>
@@ -162,7 +186,7 @@ export default function RefundsPage() {
         <TablePagination
           page={page}
           component="div"
-          count={orders.length}
+          count={refundData.length}
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
           rowsPerPageOptions={[5, 10, 25]}

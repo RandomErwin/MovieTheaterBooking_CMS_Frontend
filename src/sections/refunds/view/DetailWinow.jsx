@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Box, Typography, Button, Grid } from '@mui/material';
+import { Modal, Box, Typography, Button, Grid, Divider } from '@mui/material';
 
 const style = {
   position: 'absolute',
@@ -45,100 +45,103 @@ const DetailWindow = ({ show, onHide, data }) => {
     >
       <Box sx={style}>
         <Typography id="modal-title" variant="h6" component="h2" sx={{ fontFamily: 'LXGW WenKai TC', fontWeight: 'bold', color: '#fff' }}>
-          購買詳細資訊
+          退款詳細資訊
         </Typography>
         {data && (
           <Grid container spacing={2} sx={{ mt: 2}}>
-            {data.map((payment, key) => (
+            {data.map((refund, key) => (
               <>
                 <Grid item xs={12} sm={6} key={key}>
                   <Typography variant='body1'>
-                    <div>會員姓名: {payment.userName}</div>
+                    <div>會員姓名: {refund.userName}</div>
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6} key={key}>
                   <Typography variant='body1'>
-                    <div>訂單編號: {payment.orderNum}</div>
+                    <div>訂單編號: {refund.orderNum}</div>
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6} key={key}>
                   <Typography variant='body1'>
-                    <div>交易金額: {payment.totalAmount}</div>
+                    <div>交易金額: {refund.totalAmount}</div>
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6} key={key}>
                   <Typography variant='body1'>
-                    <div>紅利點數: {payment.bonus}</div>
+                    <div>紅利點數: {refund.bonus}</div>
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6} key={key}>
                   <Typography variant='body1'>
-                    <div>電影名稱: {payment.title}</div>
+                    <div>電影名稱: {refund.title}</div>
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6} key={key}>
                   <Typography variant='body1'>
-                    <div>上映日期: {payment.showtime}</div>
+                    <div>上映日期: {refund.showtime}</div>
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6} key={key}>
                   <Typography variant='body1'>
-                    <div>電影票號: {payment.ticketId}</div>
+                    <div>電影票號: {refund.ticketId}</div>
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6} key={key}>
                   <Typography variant='body1'>
-                    <div>票種: {payment.ticketType}</div>
+                    <div>票種: {refund.ticketType}</div>
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6} key={key}>
                   <Typography variant='body1'>
-                    <div>座位編號: {payment.seatNote}</div>
+                    <div>座位編號: {refund.seatNote}</div>
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6} key={key}>
                   <Typography variant='body1'>
-                    <div>售票單價: {payment.uniPrice}</div>
+                    <div>售票單價: {refund.uniPrice}</div>
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6} key={key}>
                   <Typography variant='body1'>
-                    <div>座位排號: {payment.rowNumber}</div>
+                    <div>座位排號: {refund.rowNumber}</div>
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6} key={key}>
                   <Typography variant='body1'>
-                    <div>座位列號: {payment.seatNumber}</div>
+                    <div>座位列號: {refund.seatNumber}</div>
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6} key={key}>
                   <Typography variant='body1'>
-                    <div>付款方式: {payment.payway}</div>
+                    <div>退款方式: {refund.payway}</div>
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6} key={key}>
                   <Typography variant='body1'>
-                    <div>付款狀態: {payment.payStatus}</div>
+                    <div>退款狀態: {refund.payStatus}</div>
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6} key={key}>
                   <Typography variant='body1'>
-                    <div>付款時間: {payment.payTime}</div>
+                    <div>退款時間: {refund.payTime}</div>
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6} key={key}>
                   <Typography variant='body1'>
-                    <div>修改時間: {payment.modifyTime}</div>
+                    <div>修改時間: {refund.modifyTime}</div>
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6} key={key}>
-                  <Typography variant='body1'>
-                    <div>訂購筆數: {`${key+1}`} </div>
-                  </Typography>
+                  <Divider 
+                    variant="large" 
+                    sx={{borderColor: '#0080FF'}}/>
                 </Grid>
                 <Grid item xs={12} sm={6} key={key}>
-                  <Typography variant='body1'><img src={payment.qrcode} alt="" /></Typography>
+                  <Divider 
+                    variant="large" 
+                    sx={{borderColor: '#0080FF'}}/>
                 </Grid>
+                
               </>
               
             ))}

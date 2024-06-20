@@ -107,7 +107,7 @@ export default function PaymentsPage() {
   const [detailData, setDetailData] = useState('');
   const PAYMENT_URL = 'http://localhost:8080/orders/getOrders';
   const handleRowClick = async (orderNum) => {
-    const res = await axios.get(`${PAYMENT_URL}/${orderNum}`)
+    const res = await axios.get(`${PAYMENT_URL}/${orderNum}/payment`)
     setDetailData(res.data);
     setDetailShow(true);
   }
