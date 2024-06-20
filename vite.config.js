@@ -12,6 +12,7 @@ export default defineConfig({
       eslint: {
         lintCommand: 'eslint "./src/**/*.{js,jsx,ts,tsx}"',
       },
+      overlay: false, // Disable the error overlay
     }),
   ],
   resolve: {

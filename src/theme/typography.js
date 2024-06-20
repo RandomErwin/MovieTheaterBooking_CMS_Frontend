@@ -84,6 +84,10 @@ export const typography = {
     fontSize: 16,
     color: '#fff',
     fontFamily: "LXGW WenKai TC",
+    '&:hover':{
+      color: '#FF5809',
+      textDecoration: 'underline',
+    },
   },
   // 對全域使用body1的物件更改其屬性
   body1: {
@@ -111,7 +115,8 @@ export const typography = {
   button: {
     fontWeight: 700,
     lineHeight: 24 / 14,
-    fontSize: pxToRem(14),
+    fontSize: 18,
+    fontFamily: "LXGW WenKai TC",
     textTransform: 'unset',
   },
 };

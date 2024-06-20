@@ -1,6 +1,4 @@
 import { Modal, Box, Typography, Grid, Button } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 
 const style = {
     position: 'absolute',
@@ -12,8 +10,9 @@ const style = {
     overflowY: 'auto',
     bgcolor: 'background.paper',
     boxShadow: 24,
-    p: 4,
+    // p: 4,
     color: '#FF5809',
+    // padding: 6,
   
     '&::-webkit-scrollbar': {
       width: 7,
@@ -33,20 +32,9 @@ const style = {
     '&::-webkit-scrollbar-track': {
       boxShadow: 'transparent',
     },
-};
+  };
 
 const MovieDetailShow = ({ show, onHide, data}) => {
-    const putURL = 'http://localhost:8080/movie/updateMovie';
-
-    const OutTheater = async (e) => {
-        const id = e.currentTarget.id;
-        try {
-            const res = await axios.put(`${putURL}/${id}`);
-            console.log(res.data);
-        } catch (error) {
-            console.error('Error updating movie:', error);
-        }
-    }
     return(
         <Modal
             open={show}
@@ -60,35 +48,41 @@ const MovieDetailShow = ({ show, onHide, data}) => {
                 {data && (
                 <Grid container spacing={2} sx={{ mt: 2}}>
                     {data.map((movie, key) => (
-                    <React.Fragment key={movie.id}>
-                        <Grid item xs={12} sm={6}>
+                    <>
+                        <Grid item xs={12} sm={6} key={key}>
                         <Typography variant='body1'>
                             <img src={movie.poster} alt="" />
                         </Typography>
                         </Grid>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} sm={6} key={key}>
+                            <Grid item xs={12} sm={6} key={key}>
                             <Typography variant='body1'>
                                 <div>電影名稱: {movie.title}</div>
                             </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={6} key={key}>
                             <Typography variant='body1'>
                                 <div>電影片長: {movie.runtime}</div>
                             </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={6} key={key}>
                             <Typography variant='body1'>
                                 <div>電影類型: {movie.genre}</div>
                             </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={6} key={key}>
                             <Typography variant='body1'>
                                 <div>上映日期: {movie.releaseDate}</div>
                             </Typography>
+                            </Grid>
                         </Grid>
-                        <Button id={movie.id} onClick={OutTheater} disabled={movie.isOutTheater}>下檔</Button>
-                        <Button onClick={onHide}>關閉</Button>
-                    </React.Fragment>
+                        
+                    </>
                     
                     ))}
-                    
                 </Grid>
                 )}
-                
+                <Button onClick={onHide}>Close</Button>
             </Box>
         </Modal>
     )

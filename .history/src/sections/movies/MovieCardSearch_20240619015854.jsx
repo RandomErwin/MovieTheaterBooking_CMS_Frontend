@@ -8,15 +8,11 @@ const MovieCardSearch = ({movie}) => {
     const [movieData, setMovieData] = useState([]);
     const imghandler = async (e) => {
         const id = e.target.id;
-        try {
-            // 常用的異步操作有：文件操作、數據庫操作、AJAX 以及定時器等。
-            const res = await axios.get(`${getURL}/${id}`);
-            const data = res.data.data;
-            setMovieData(Array.isArray(data)? data : [data]);
-            setDetailShow(true);
-        } catch (error) {
-            console.error("Error fetching movie data:", error);
-        }
+        const res = await axios.get(`${getURL}/${id}`);
+        console.log(data);
+        const data = res.data.data;
+        setDetailShow(true);
+        setMovieData(data);
     }
 
     // 檢查 poster 是否為有效 base64字符
