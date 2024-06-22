@@ -1,7 +1,8 @@
 import React from 'react';
 import { Modal, Box, Typography, Button, Grid, Divider } from '@mui/material';
+import { alpha } from '@mui/material/styles';
 
-const style = {
+const style = (theme) => ({
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -9,7 +10,7 @@ const style = {
   width: 680,
   maxHeight: 650,
   overflowY: 'auto',
-  bgcolor: 'background.paper',
+  bgcolor: alpha(theme.palette.background.paper, 0.7),
   boxShadow: 24,
   p: 4,
   color: '#FF5809',
@@ -33,7 +34,7 @@ const style = {
   '&::-webkit-scrollbar-track': {
     boxShadow: 'transparent',
   },
-};
+});
 
 const DetailWindow = ({ show, onHide, data }) => {
   return (

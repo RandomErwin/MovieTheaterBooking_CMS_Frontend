@@ -108,7 +108,7 @@ export default function AccountPopover() {
           onClick={handleClose}
           sx={{ typography: 'body2', color: 'error.main', py: 1.5 }}
         >
-          Logout
+          登出
         </MenuItem>
       </Popover>
     </>

@@ -4,8 +4,6 @@ import Box from '@mui/material/Box';
 import Nav from './nav';
 import Main from './main';
 import Header from './header';
-// import AnimatedWrapper from '../theme/AnimatedWrapper.jsx'
-
 
 export default function DashboardLayout({ children }) {
   const [openNav, setOpenNav] = useState(false);
@@ -13,8 +11,6 @@ export default function DashboardLayout({ children }) {
   return (
     <>
       <Header onOpenNav={() => setOpenNav(true)} />
-
-      {/* <AnimatedWrapper> */}
         <Box
           sx={{
             minHeight: 1,
@@ -26,7 +22,6 @@ export default function DashboardLayout({ children }) {
 
           <Main>{children}</Main>
         </Box>
-      {/* </AnimatedWrapper> */}
     </>
   );
 }
