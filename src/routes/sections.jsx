@@ -1,6 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { Outlet, Navigate, useRoutes } from 'react-router-dom';
-
+import { Outlet, useRoutes } from 'react-router-dom';
 import DashboardLayout from 'src/layouts/dashboard';
 
 export const LgoinPage = lazy(() => import('src/pages/login'));

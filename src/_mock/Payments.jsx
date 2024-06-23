@@ -4,7 +4,6 @@ const paymentURL = 'http://localhost:8080/payments/getPayment/payment'
 export const fetchPayments = async () => {
     try {
        const res = await axios.get(paymentURL);
-    //    console.log(res.data);
        return res.data;
     } catch (error) {
         console.error('Error fetching payment data:', error);
