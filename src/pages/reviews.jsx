@@ -8,7 +8,7 @@ export default function ReviewsPage() {
   return (
     <>
       <Helmet>
-        <title> Blog | TaiShow </title>
+        <title> 評論審閱 | TaiShow </title>
       </Helmet>
 
       <ReviewsView />

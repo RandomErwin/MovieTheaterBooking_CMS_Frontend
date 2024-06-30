@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
 import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import Chip from '@mui/material/Chip';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 import axios from 'axios';
 import dayjs from 'dayjs';
 
@@ -22,6 +23,8 @@ const PaymentTableRow = ({
   handleClick,
   onRowClick,
 }) => {
+  const [loading, setLoading] = useState(false);
+
   const handleDetailClick = (event) => {
     event.stopPropagation();
     onRowClick(orderNum);
@@ -30,6 +33,17 @@ const PaymentTableRow = ({
   const formatNumber = (number) => {
     return number.toLocaleString();
   };
+
+  const formattedBonus =
+    bonus < 0 ? (
+      <Typography variant="subtitle2" noWrap sx={{ color: 'red' }}>
+        {formatNumber(bonus)}
+      </Typography>
+    ) : (
+      <Typography variant="subtitle2" noWrap>
+        {formatNumber(bonus)}
+      </Typography>
+    );
 
   const validShowTime = showTime ? dayjs(showTime) : null;
 
@@ -40,71 +54,81 @@ const PaymentTableRow = ({
     dayjs().isBefore(validShowTime.subtract(30, 'minute'));
 
   const handleRefund = async () => {
+    setLoading(true);
     try {
       await axios.post(`http://localhost:8080/payment-records/${orderNum}`);
-      alert('退款成功');
     } catch (error) {
-      alert('退款失败');
+      console.log(error);
+    } finally {
+      alert('退款單已送出');
+      window.location.reload();
     }
   };
 
   return (
-    <TableRow hover={false} tabIndex={-1} role="checkbox" selected={selected}>
-      <TableCell padding="checkbox">
-        <Checkbox
-          disableRipple
-          checked={selected}
-          onChange={(event) => handleClick(event, orderNum)}
-        />
-      </TableCell>
+    <>
+      <TableRow hover={false} tabIndex={-1} role="checkbox" selected={selected}>
+        <TableCell padding="checkbox">
+          <Checkbox
+            disableRipple
+            checked={selected}
+            onChange={(event) => handleClick(event, orderNum)}
+          />
+        </TableCell>
 
-      <TableCell component="th" scope="row" padding="none">
-        <Typography
-          variant="subtitle2"
-          noWrap
-          sx={{ cursor: 'pointer', color: 'DodgerBlue', textDecoration: 'underline' }}
-          onClick={handleDetailClick}
-        >
-          {orderNum}
-        </Typography>
-      </TableCell>
+        <TableCell component="th" scope="row" padding="none">
+          <Typography
+            variant="subtitle2"
+            noWrap
+            sx={{ cursor: 'pointer', color: 'DodgerBlue', textDecoration: 'underline' }}
+            onClick={handleDetailClick}
+          >
+            {orderNum}
+          </Typography>
+        </TableCell>
 
-      <TableCell sx={{ pointerEvents: 'none' }}>
-        <Typography variant="subtitle2" noWrap>
-          {account}
-        </Typography>
-      </TableCell>
+        <TableCell sx={{ pointerEvents: 'none' }}>
+          <Typography variant="subtitle2" noWrap>
+            {account}
+          </Typography>
+        </TableCell>
 
-      <TableCell sx={{ pointerEvents: 'none' }}>
-        <Typography variant="subtitle2" noWrap>
-          {formatNumber(totalAmount)}
-        </Typography>
-      </TableCell>
+        <TableCell sx={{ pointerEvents: 'none' }}>
+          <Typography variant="subtitle2" noWrap>
+            {formatNumber(totalAmount)}
+          </Typography>
+        </TableCell>
 
-      <TableCell sx={{ pointerEvents: 'none' }}>
-        <Typography variant="subtitle2" noWrap>
-          {formatNumber(bonus)}
-        </Typography>
-      </TableCell>
+        <TableCell sx={{ pointerEvents: 'none' }}>{formattedBonus}</TableCell>
 
-      <TableCell sx={{ pointerEvents: 'none' }}>
-        <Typography variant="subtitle2" noWrap>
-          {payway || '-'}
-        </Typography>
-      </TableCell>
+        <TableCell sx={{ pointerEvents: 'none' }}>
+          <Typography variant="subtitle2" noWrap>
+            {payway || '-'}
+          </Typography>
+        </TableCell>
 
-      <TableCell sx={{ pointerEvents: 'none' }}>
-        <Typography variant="subtitle2" noWrap>
-          {payStatus}
-        </Typography>
-      </TableCell>
+        <TableCell sx={{ pointerEvents: 'none' }}>
+          <Typography variant="subtitle2" noWrap>
+            {payStatus}
+          </Typography>
+        </TableCell>
 
-      <TableCell align="right">
-        <Button variant="contained" color="primary" onClick={handleRefund} disabled={!isRefundable}>
-          退款
-        </Button>
-      </TableCell>
-    </TableRow>
+        <TableCell align="right">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleRefund}
+            disabled={!isRefundable}
+          >
+            退款
+          </Button>
+        </TableCell>
+      </TableRow>
+
+      <Backdrop open={loading} sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    </>
   );
 };
 

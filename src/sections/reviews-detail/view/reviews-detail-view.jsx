@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Outlet } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
@@ -11,32 +10,38 @@ import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 import Scrollbar from 'src/components/scrollbar';
 import TableNoData from '../table-no-data';
-import ReviewTableRow from '../review-table-row';
-import ReviewTableHead from '../review-table-head';
+import ReviewsDetailTableRow from '../reviews-detail-table-row';
+import ReviewsDetailTableHead from '../reviews-detail-table-head';
 import TableEmptyRows from '../table-empty-rows';
-import ReviewTableToolbar from '../review-table-toolbar';
+import ReviewsDetailTableToolbar from '../reviews-detail-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
+import { useParams, Link } from 'react-router-dom';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
 
-export default function ReviewsPage() {
+export default function ReviewsDetailPage() {
+  const { movieId } = useParams();
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
   const [selected, setSelected] = useState([]);
   const [orderBy, setOrderBy] = useState('');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [movies, setMovies] = useState([]);
+  const [title, setTitle] = useState('');
+
+  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    const fetchMovies = async () => {
+    const fetchReviews = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/review-records');
-        setMovies(response.data);
+        const response = await axios.get(`http://localhost:8080/review-records/${movieId}`);
+        setReviews(response.data.reviewRecordList);
+        setTitle(response.data.title);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-    fetchMovies();
-  }, []);
+    fetchReviews();
+  }, [movieId]);
 
   const handleSort = (event, id) => {
     const isAsc = orderBy === id && order === 'asc';
@@ -46,19 +51,19 @@ export default function ReviewsPage() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = movies.map((n) => n.title);
+      const newSelecteds = reviews.map((review) => review.id);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, title) => {
-    const selectedIndex = selected.indexOf(title);
+  const handleClick = (event, id) => {
+    const selectedIndex = selected.indexOf(id);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, title);
+      newSelected = newSelected.concat(selected, id);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -88,7 +93,7 @@ export default function ReviewsPage() {
   };
 
   const dataFiltered = applyFilter({
-    inputData: movies,
+    inputData: reviews,
     comparator: getComparator(order, orderBy),
     filterName,
   });
@@ -98,11 +103,18 @@ export default function ReviewsPage() {
   return (
     <Container>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-        <Typography variant="h4">評論審閱</Typography>
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link to="/reviews" style={{ textDecoration: 'underline', color: 'DodgerBlue' }}>
+            <Typography variant="h4">評論審閱</Typography>
+          </Link>
+          <Typography color="#FFFFFF" variant="h5">
+            {title}
+          </Typography>
+        </Breadcrumbs>
       </Stack>
 
       <Card>
-        <ReviewTableToolbar
+        <ReviewsDetailTableToolbar
           numSelected={selected.length}
           filterName={filterName}
           onFilterName={handleFilterByName}
@@ -111,44 +123,43 @@ export default function ReviewsPage() {
         <Scrollbar>
           <TableContainer sx={{ overflow: 'unset' }}>
             <Table sx={{ minWidth: 800 }}>
-              <ReviewTableHead
+              <ReviewsDetailTableHead
                 order={order}
                 orderBy={orderBy}
-                rowCount={movies.length}
+                rowCount={reviews.length}
                 numSelected={selected.length}
                 onRequestSort={handleSort}
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
-                  { id: 'title', label: '片名' },
-                  { id: 'genre', label: '類型' },
-                  { id: 'rating', label: '分級' },
-                  { id: 'runtime', label: '片長' },
-                  { id: 'releaseDate', label: '上映時間' },
-                  { id: 'language', label: '語言' },
+                  { id: 'account', label: '帳號' },
+                  { id: 'nickName', label: '暱稱' },
+                  { id: 'score', label: '評分' },
+                  { id: 'comment', label: '評論內容' },
+                  { id: 'reviewDate', label: '評論時間' },
+                  { id: 'action', label: '操作' },
                 ]}
               />
               <TableBody>
                 {dataFiltered
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((movie) => (
-                    <ReviewTableRow
-                      key={movie.id}
-                      id={movie.id}
-                      title={movie.title}
-                      genre={movie.genre}
-                      rating={movie.rating}
-                      runtime={`${movie.runtime} 分鐘`}
-                      releaseDate={movie.releaseDate}
-                      language={movie.language}
-                      poster={movie.poster}
-                      selected={selected.indexOf(movie.title) !== -1}
-                      handleClick={(event) => handleClick(event, movie.title)}
+                  .map((review) => (
+                    <ReviewsDetailTableRow
+                      key={review.id}
+                      id={review.id}
+                      account={review.account}
+                      nickName={review.nickName}
+                      score={review.score}
+                      comment={review.comment}
+                      reviewDate={review.reviewDate}
+                      isReport={review.isReport}
+                      selected={selected.indexOf(review.id) !== -1}
+                      handleClick={(event) => handleClick(event, review.id)}
                     />
                   ))}
 
                 <TableEmptyRows
                   height={77}
-                  emptyRows={emptyRows(page, rowsPerPage, movies.length)}
+                  emptyRows={emptyRows(page, rowsPerPage, reviews.length)}
                 />
 
                 {notFound && <TableNoData query={filterName} />}
@@ -160,14 +171,13 @@ export default function ReviewsPage() {
         <TablePagination
           page={page}
           component="div"
-          count={movies.length}
+          count={reviews.length}
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
           rowsPerPageOptions={[5, 10, 25]}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Card>
-      <Outlet />
     </Container>
   );
 }

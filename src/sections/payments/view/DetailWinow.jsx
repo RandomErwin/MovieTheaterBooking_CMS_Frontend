@@ -22,7 +22,8 @@ const style = (theme) => ({
   width: 680,
   maxHeight: 650,
   overflowY: 'auto',
-  bgcolor: alpha(theme.palette.background.paper, 0.7),
+  bgcolor: alpha('#708090', 1),
+  borderRadius: '10px',
   boxShadow: 24,
   p: 4,
   color: '#FF5809',
@@ -49,6 +50,10 @@ const style = (theme) => ({
 });
 
 const DetailWindow = ({ show, onHide, data }) => {
+  const formatNumber = (number) => {
+    return number.toLocaleString();
+  };
+
   return (
     <Modal
       open={show}
@@ -75,36 +80,38 @@ const DetailWindow = ({ show, onHide, data }) => {
             <Table aria-label="purchase details">
               <TableBody>
                 <TableRow>
-                  <TableCell>訂單編號</TableCell>
-                  <TableCell>{data.orderNum}</TableCell>
+                  <TableCell sx={{ color: '#fff' }}>訂單編號</TableCell>
+                  <TableCell sx={{ color: '#fff' }}>{data.orderNum}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>建立時間</TableCell>
-                  <TableCell>{data.orderDate}</TableCell>
+                  <TableCell sx={{ color: '#fff' }}>建立時間</TableCell>
+                  <TableCell sx={{ color: '#fff' }}>{data.orderDate}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>會員帳號</TableCell>
-                  <TableCell>{data.account}</TableCell>
+                  <TableCell sx={{ color: '#fff' }}>會員帳號</TableCell>
+                  <TableCell sx={{ color: '#fff' }}>{data.account}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>交易金額</TableCell>
-                  <TableCell>{data.totalAmount}</TableCell>
+                  <TableCell sx={{ color: '#fff' }}>交易金額</TableCell>
+                  <TableCell sx={{ color: '#fff' }}>{data.totalAmount}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>紅利點數</TableCell>
-                  <TableCell>{data.bonus}</TableCell>
+                  <TableCell sx={{ color: '#fff' }}>紅利點數</TableCell>
+                  <TableCell sx={{ color: data.bonus < 0 ? 'red' : '#fff', whiteSpace: 'nowrap' }}>
+                    {formatNumber(data.bonus)}
+                  </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>電影名稱</TableCell>
-                  <TableCell>{data.title}</TableCell>
+                  <TableCell sx={{ color: '#fff' }}>電影名稱</TableCell>
+                  <TableCell sx={{ color: '#fff' }}>{data.title}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>上映日期</TableCell>
-                  <TableCell>{data.showTime}</TableCell>
+                  <TableCell sx={{ color: '#fff' }}>上映日期</TableCell>
+                  <TableCell sx={{ color: '#fff' }}>{data.showTime}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>票數</TableCell>
-                  <TableCell>{data.ticketDetailList.length}</TableCell>
+                  <TableCell sx={{ color: '#fff' }}>票數</TableCell>
+                  <TableCell sx={{ color: '#fff' }}>{data.ticketDetailList.length}</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
@@ -124,19 +131,19 @@ const DetailWindow = ({ show, onHide, data }) => {
             <Table aria-label="ticket details">
               <TableHead>
                 <TableRow>
-                  <TableCell>票種</TableCell>
-                  <TableCell>座位</TableCell>
-                  <TableCell>售價</TableCell>
+                  <TableCell sx={{ color: '#fff' }}>票種</TableCell>
+                  <TableCell sx={{ color: '#fff' }}>座位</TableCell>
+                  <TableCell sx={{ color: '#fff' }}>售價</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {data.ticketDetailList.map((ticket, index) => (
                   <TableRow key={index}>
-                    <TableCell>{ticket.ticketType}</TableCell>
-                    <TableCell>
+                    <TableCell sx={{ color: '#fff' }}>{ticket.ticketType}</TableCell>
+                    <TableCell sx={{ color: '#fff' }}>
                       {ticket.rowNum}排{ticket.seatNum}號
                     </TableCell>
-                    <TableCell>{ticket.unitPrice}</TableCell>
+                    <TableCell sx={{ color: '#fff' }}>{ticket.unitPrice}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -157,25 +164,25 @@ const DetailWindow = ({ show, onHide, data }) => {
             <Table aria-label="additional details">
               <TableBody>
                 <TableRow>
-                  <TableCell>付款方式</TableCell>
-                  <TableCell>{data.payway || '-'}</TableCell>
+                  <TableCell sx={{ color: '#fff' }}>付款方式</TableCell>
+                  <TableCell sx={{ color: '#fff' }}>{data.payway || '-'}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>付款狀態</TableCell>
-                  <TableCell>{data.payStatus}</TableCell>
+                  <TableCell sx={{ color: '#fff' }}>付款狀態</TableCell>
+                  <TableCell sx={{ color: '#fff' }}>{data.payStatus}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>付款時間</TableCell>
-                  <TableCell>{data.payTime || '-'}</TableCell>
+                  <TableCell sx={{ color: '#fff' }}>付款時間</TableCell>
+                  <TableCell sx={{ color: '#fff' }}>{data.payTime || '-'}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>最後修改時間</TableCell>
-                  <TableCell>{data.modifyTime}</TableCell>
+                  <TableCell sx={{ color: '#fff' }}>最後修改時間</TableCell>
+                  <TableCell sx={{ color: '#fff' }}>{data.modifyTime}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>QR-Code</TableCell>
+                  <TableCell sx={{ color: '#fff' }}>QR-Code</TableCell>
                   <TableCell>
-                    <img src={data.qrcode} alt="QR Code" />
+                    <img src={data.qrcode} alt="QR Code" style={{ width: 150, height: 150 }} />
                   </TableCell>
                 </TableRow>
               </TableBody>

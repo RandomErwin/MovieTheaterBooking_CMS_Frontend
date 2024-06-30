@@ -10,26 +10,28 @@ export const BonusPage = lazy(() => import('src/pages/bonus'));
 export const PaymentsPage = lazy(() => import('src/pages/payments'));
 export const RefundsPage = lazy(() => import('src/pages/refunds'));
 export const ReviewsPage = lazy(() => import('src/pages/reviews'));
+export const ReviewDetailPage = lazy(() => import('src/pages/reviews-detail'));
 
 export default function Router() {
   const routes = useRoutes([
     {
-        element: (
-          <DashboardLayout>
-            <Suspense>
-              <Outlet />
-            </Suspense>
-          </DashboardLayout>
-        ),
-        children: [
-          { element: <LgoinPage />, index: true },
-          { path: 'movies', element: <MoviesPage /> },
-          { path: 'users', element: <UsersPage /> },
-          { path: 'bonus', element: <BonusPage /> },
-          { path: 'payments', element: <PaymentsPage /> },
-          { path: 'refunds', element: <RefundsPage /> },
-          { path: 'reviews', element: <ReviewsPage /> },
-        ],  
+      element: (
+        <DashboardLayout>
+          <Suspense>
+            <Outlet />
+          </Suspense>
+        </DashboardLayout>
+      ),
+      children: [
+        { element: <LgoinPage />, index: true },
+        { path: 'movies', element: <MoviesPage /> },
+        { path: 'users', element: <UsersPage /> },
+        { path: 'bonus', element: <BonusPage /> },
+        { path: 'payments', element: <PaymentsPage /> },
+        { path: 'refunds', element: <RefundsPage /> },
+        { path: 'reviews', element: <ReviewsPage /> },
+        { path: 'reviews/:movieId', element: <ReviewDetailPage /> },
+      ],
     },
   ]);
 

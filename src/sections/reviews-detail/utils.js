@@ -47,10 +47,20 @@ export function applyFilter({ inputData, comparator, filterName }) {
   inputData = stabilizedThis.map((el) => el[0]);
 
   if (filterName) {
-    inputData = inputData.filter(
-      (movie) => movie.title.toLowerCase().includes(filterName.toLowerCase())
-    );
+    inputData = inputData.filter((review) => {
+      const account = review.account ? review.account.toLowerCase() : '';
+      const nickName = review.nickName ? review.nickName.toLowerCase() : '';
+      const comment = review.comment ? review.comment.toLowerCase() : '';
+
+      return (
+        account.includes(filterName.toLowerCase()) ||
+        nickName.includes(filterName.toLowerCase()) ||
+        comment.includes(filterName.toLowerCase())
+      );
+    });
   }
 
   return inputData;
 }
+
+
