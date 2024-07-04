@@ -74,7 +74,7 @@ function NewMovies({ show, onHide }){
          // 阻止表單送出
         e.preventDefault();
         
-        // 所有參數都必須包含在from submission => submitHandlers
+        // 所有參數都必須包含在form submission => submitHandlers
         // 即使是 isOutTheater 預設值=false 都必須放入包含在FormData
         const formData = new FormData();
         formData.append('title', title);

@@ -36,8 +36,64 @@ const style = {
 };
 
 const MovieDetailShow = ({ show, onHide, data}) => {
-    const putURL = 'http://localhost:8080/movie/updateMovie';
+    const [files, setFiles] = useState([]);
+    const [previews, setPreviews] = useState([]);
 
+    const handleDragOver = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    const handleDrop = (e, setFiles, setPreviews) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const droppedFiles = Array.from(e.dataTransfer.files);
+        if(droppedFiles && droppedFiles.length > 0) {
+            const updatedFiles = [...files, ...droppedFiles];
+            const updatedPreviews = [...previews, 
+                ...droppedFiles.map((file) => URL.createObjectURL(file))];
+            setFiles(updatedFiles);
+            setPreviews(updatedPreviews);
+        }
+    }
+
+    // e.target.files => FileList
+    // shallow => copies of the current files and previews
+    const handleFileChange = (e, setFiles, setPreviews) => {
+        const selectedFiles = Array.from(e.target.files);
+        if(selectedFiles && selectedFiles.length > 0) {
+            const updatedFiles = [...files, ...selectedFiles];
+            const updatedPreviews = [...previews, 
+                ...selectedFiles.map((file) => URL.createObjectURL(file))];
+            setFiles(updatedFiles);
+            setPreviews(updatedPreviews);
+        } 
+    };
+
+    const handleUpload = async (movieId) => {
+        const uploadURL = 'http://localhost:8080/still/upload';
+        const formData = new FormData();
+        files.forEach((file) => {
+            if(file){
+                formData.append('files', file);
+            }
+        });
+        formData.append('movieId', movieId);
+        try {
+            const res = await fetch(uploadURL, {
+                method: 'POST',
+                body: formData,
+            })
+            alert('上傳成功');
+
+        } catch (error) {
+            console.error('上傳失敗: ', error)
+        }
+        
+    }
+
+    const putURL = 'http://localhost:8080/movie/updateMovie';
     const OutTheater = async (e) => {
         const id = e.currentTarget.id;
         try {
@@ -79,6 +135,39 @@ const MovieDetailShow = ({ show, onHide, data}) => {
                             <Typography variant='body1'>
                                 <div>上映日期: {movie.releaseDate}</div>
                             </Typography>
+
+                            {[0, 1, 2].map((index) => (
+                                <div 
+                                    key={index} 
+                                    onDragOver={handleDragOver} 
+                                    onDrop={(e) => handleDrop(e, setFiles, setPreviews)}
+                                    style={{
+                                        border: '2px dashed #ccc',
+                                        borderRadius: '10px',
+                                        padding: '20px',
+                                        textAlign: 'center',
+                                        cursor: 'pointer',
+                                    }}
+                                >
+                                    <input type='file' 
+                                        onChange={(e) => handleFileChange(e, setFiles, setPreviews)} 
+                                        multiple/>
+                                        {previews.length > 0 && (
+                                            <div style={{ marginTop: '20px' }}>
+                                                {previews.map((preview, index) => (
+                                                    <img 
+                                                        key={index} 
+                                                        src={preview} 
+                                                        alt={`Preview ${index + 1}`} 
+                                                        style={{ 
+                                                            maxWidth: '100px', maxHeight: '100px', margin: '10px' }} />
+                                                ))}
+                                            </div>
+                                    )}
+                                </div>
+                            ))}
+                            
+                            <Button onClick={() => handleUpload(movie.id)}>上傳圖片</Button>
                         </Grid>
                         <Button id={movie.id} onClick={OutTheater} disabled={movie.isOutTheater}>下檔</Button>
                         <Button onClick={onHide}>關閉</Button>
