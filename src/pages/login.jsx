@@ -1,11 +1,13 @@
 import React, {useState} from 'react'
-import axios from 'axios'
 import './loginpage.css'
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
-const loginURL = 'http://localhost:8080/login';
-const LgoinPage = () => {
-  const[account, setAccount] = useState('')
-  const[passwd, setPasswd] = useState('')
+const LoginPage = () => {
+  const[account, setAccount] = useState('');;
+  const[passwd, setPasswd] = useState('');
+  const[loading, setLoading] = useState(false);
+  const navigate = useNavigate(); //注意放置的位置
 
   const handleAccountChange = (e) => {
     setAccount(e.target.value)
@@ -14,28 +16,41 @@ const LgoinPage = () => {
     setPasswd(e.target.value)
   }
 
-  // email:資料表欄位名稱 <= email:前端變數名稱
-  const handleSubmit = (e) => {
+  // 注意body的寫法
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const loginURL = 'http://localhost:8080/permission/login';
+    try {
+      const res = await fetch(loginURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          account: account,
+          passwd: passwd,
+        }),
+        credentials: 'include',
+      });
+      
+      // read response test 作為 token => 設置token
+      if(res.ok){
+        const token = await res.text();
+        Cookies.set('token', token, {expires: 1});
 
-    const formData = new FormData();
-    formData.append('account', account);
-    formData.append('passwd', passwd);
-
-    // Java => 挑到的圖片轉成文字 data uri => base64 => 檔案大小加1/3
-    // BLOB: Binary Large Object(長度: 255)
-    // CLOB: Character Large Object => 存劇本、小說、留言、轉換成文字的圖片
-    axios.post(loginURL, formData, {
-      headers:{
-        'Content-Type': 'multipart/form-data'
+        setTimeout(() => {
+          setLoading(false);
+          const redirectTo = location.state?.from?.pathname || '/movies';
+          navigate(redirectTo);
+        }, 1000);
+        console.log('登入成功');
+      }else {
+        console.log('登入失敗', res.statusText);
       }
-    })
-    .then(function(response){
-      console.log(response);
-    })
-    .catch(function(error){
-      console.log(error);
-    })
+
+    } catch (error) {
+      console.error('錯誤 ', error);
+    }
   }
 
   return (
@@ -62,10 +77,7 @@ const LgoinPage = () => {
       
       </form>
     </section>
-
-    
-    
   )
 }
 
-export default LgoinPage
+export default LoginPage

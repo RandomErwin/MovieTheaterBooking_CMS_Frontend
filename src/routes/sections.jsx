@@ -2,7 +2,7 @@ import { lazy, Suspense } from 'react';
 import { Outlet, useRoutes } from 'react-router-dom';
 import DashboardLayout from 'src/layouts/dashboard';
 
-export const LgoinPage = lazy(() => import('src/pages/login'));
+export const LoginPage = lazy(() => import('src/pages/login'));
 export const IndexPage = lazy(() => import('src/pages/app'));
 export const MoviesPage = lazy(() => import('src/pages/movies'));
 export const UsersPage = lazy(() => import('src/pages/users'));
@@ -23,7 +23,7 @@ export default function Router() {
         </DashboardLayout>
       ),
       children: [
-        { element: <LgoinPage />, index: true },
+        { element: <LoginPage />, index: true },
         { path: 'movies', element: <MoviesPage /> },
         { path: 'users', element: <UsersPage /> },
         { path: 'bonus', element: <BonusPage /> },
