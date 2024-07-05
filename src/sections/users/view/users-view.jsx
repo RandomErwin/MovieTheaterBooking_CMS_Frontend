@@ -139,7 +139,7 @@ export default function UsersPage() {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => (
                     <UserTableRow
-                      key={row.userId}
+                      key={row.account}
                       nickName={row.nickName}
                       account={row.account}
                       birthday={row.birthday}

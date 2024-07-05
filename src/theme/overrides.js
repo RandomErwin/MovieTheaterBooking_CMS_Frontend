@@ -53,9 +53,9 @@ export function overrides(theme) {
         root: {
           backgroundColor: alpha(theme.palette.grey[900], 0.8),
         },
-        invisible: {
-          background: 'transparent',
-        },
+        // invisible: {
+        //   background: 'transparent',
+        // },
       },
     },
     MuiButton: {

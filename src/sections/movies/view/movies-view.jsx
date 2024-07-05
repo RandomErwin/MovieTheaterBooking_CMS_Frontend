@@ -1,11 +1,8 @@
 import { useState } from 'react';
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
-// import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-// import {movies} from 'src/_mock/movies'
-// import ProductCard from '../product-card';
 import Iconify from 'src/components/iconify';
 import NewMovies from '../NewMovies';
 import MovieSearch from '../MovieSearch';

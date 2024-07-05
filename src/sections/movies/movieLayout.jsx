@@ -40,7 +40,7 @@ const MovieLayout = () => {
     <div>
       <div className='search'>
         <input value={searchTerm} 
-          placeholder='Search for movies' 
+          placeholder='搜尋電影' 
           onChange={(e) => setSearchTerm(e.target.value)}/>
 
         <img src={ICON_URL} alt='serach' 

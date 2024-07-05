@@ -81,8 +81,8 @@ export const typography = {
   subtitle2: {
     fontWeight: 600,
     lineHeight: 22 / 14,
-    fontSize: 16,
-    color: '#fff',
+    fontSize: 18,
+    color: '#ccc',
     fontFamily: "LXGW WenKai TC",
     '&:hover':{
       color: '#FF5809',
@@ -98,9 +98,9 @@ export const typography = {
   // 修改Table標頭文字大小
   body2: {
     lineHeight: 22 / 14,
-    fontSize: 18,
+    fontSize: 20,
     fontFamily: "LXGW WenKai TC",
-    color: '#FF5809',
+    color: '#ccc',
   },
   caption: {
     lineHeight: 1.5,

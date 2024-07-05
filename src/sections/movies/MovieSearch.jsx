@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import MovieCardSearch from './MovieCardSearch'
 import './Movies.css'
+import Cookies from 'js-cookie'
 
 const COMING_URL = 'http://localhost:8080/movie/getMovie/isComing'
 const RELEASE_URL = 'http://localhost:8080/movie/getMovie/isPlaying'
@@ -10,16 +11,32 @@ const MovieSearch = () => {
     const [moviesRelease, setMoviesRelease] = useState([]);
     const [showComingSoon, setShowComingSoon] = useState(true);
 
-    // try catch when fetching data
     const searchMovies = async () => {
+        const token = Cookies.get('token');
+        if(!token){
+            alert("無使用權限");
+            return;
+        }
         try {
-            const res = await fetch(COMING_URL);
+            const res = await fetch(COMING_URL, {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                credentials: 'include',
+            });
             const dataComing = await res.json();
 
             // 使用 Array.isArray檢查API返回的數據是否為陣列，否則設置為空陣列
             setMoviesComing(Array.isArray(dataComing.data) ? dataComing.data : []);
 
-            const response = await fetch(RELEASE_URL);
+            const response = await fetch(RELEASE_URL, {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                credentials: 'include',
+            });
             const dataRelease = await response.json();
 
             setMoviesRelease(Array.isArray(dataRelease.data) ? dataRelease.data: []);
@@ -53,7 +70,7 @@ const MovieSearch = () => {
                     </div>
                 ) : (
                     <div className='empty'>
-                        <h2>No movie found</h2>
+                        <h2>查無電影</h2>
                     </div>
                 )
             ) : (
@@ -69,7 +86,7 @@ const MovieSearch = () => {
                     </div>
                 ) : (
                     <div className='empty'>
-                        <h2>No movie found</h2>
+                        <h2>查無電影</h2>
                     </div>
                 )
             )}

@@ -1,10 +1,28 @@
-import axios from 'axios';
+import Cookies from 'js-cookie';
 
-const bonusURL = 'http://localhost:8080/bonus-records';
 export const fetchBonus = async () => {
+  const bonusURL = 'http://localhost:8080/bonus-records';
+  const token = Cookies.get('token');
+  if(!token){
+    alert("無使用權限");
+    return;
+  }
   try {
-    const res = await axios.get(bonusURL);
-    return res.data;
+    const res = await fetch(bonusURL, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      credentials: 'include',
+    });
+
+    if(!res.ok){
+      throw new Error(`HTTP 錯誤, Status: ${res.status}`);
+    }
+
+    const data = await res.json();
+    return data;
+
   } catch (error) {
     console.error('Error fetching bonus data:', error);
     return [];

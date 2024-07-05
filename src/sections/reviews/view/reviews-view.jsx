@@ -16,6 +16,7 @@ import ReviewTableHead from '../review-table-head';
 import TableEmptyRows from '../table-empty-rows';
 import ReviewTableToolbar from '../review-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
+import Cookies from 'js-cookie';
 
 export default function ReviewsPage() {
   const [page, setPage] = useState(0);
@@ -28,9 +29,22 @@ export default function ReviewsPage() {
 
   useEffect(() => {
     const fetchMovies = async () => {
+      const reviewURL = 'http://localhost:8080/review-records';
+      const token = Cookies.get('token');
       try {
-        const response = await axios.get('http://localhost:8080/review-records');
-        setMovies(response.data);
+        const response = await fetch(reviewURL, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          credentials: 'include',
+        });
+
+        if(!response.ok){
+          throw new Error(`HTTP錯誤, Status: ${response.status}`)
+        }
+        const data = await response.json();
+        setMovies(data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }

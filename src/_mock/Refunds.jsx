@@ -1,10 +1,22 @@
-import axios from 'axios';
+import Cookies from 'js-cookie';
 
-const refundURL = 'http://localhost:8080/refund-records';
 export const fetchRefunds = async () => {
+  const refundURL = 'http://localhost:8080/refund-records';
+  const token = Cookies.get('token');
   try {
-    const res = await axios.get(refundURL);
-    return res.data;
+    const res = await fetch(refundURL, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      credentials: 'include',
+    });
+    if(!res.ok){
+      throw new Error(`HTTP 錯誤, Status: ${res.status}`);
+    }
+    const data = await res.json();
+    return data;
+
   } catch (error) {
     console.error('Error fetching refund data:', error);
     return [];

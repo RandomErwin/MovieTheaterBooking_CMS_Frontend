@@ -15,7 +15,7 @@ export const fetchUsers = async () => {
       },
       credentials: 'include',
     });
-
+    
     if(!res.ok){
       throw new Error(`HTTP 錯誤, Status: ${res.status}`);
     } 

@@ -112,7 +112,7 @@ ReviewTableRow.propTypes = {
   title: PropTypes.string.isRequired,
   genre: PropTypes.string.isRequired,
   rating: PropTypes.string.isRequired,
-  runtime: PropTypes.number.isRequired,
+  runtime: PropTypes.string.isRequired,
   releaseDate: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,
   poster: PropTypes.string.isRequired,

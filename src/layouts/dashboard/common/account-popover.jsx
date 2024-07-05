@@ -8,9 +8,12 @@ import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';  
 import { account } from 'src/_mock/account';
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 export default function AccountPopover() {
   const [open, setOpen] = useState(null);
+  const navigate = useNavigate();
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
@@ -19,6 +22,12 @@ export default function AccountPopover() {
   const handleClose = () => {
     setOpen(null);
   };
+
+  const handleLogout = (e) => {
+    Cookies.remove('token');
+    setOpen(null);
+    navigate('/');
+  }
 
   return (
     <>
@@ -77,7 +86,8 @@ export default function AccountPopover() {
         <MenuItem
           disableRipple
           disableTouchRipple
-          onClick={handleClose}
+          // onClick={handleClose}
+          onClick={(e) => handleLogout(e)}
           sx={{ typography: 'body2', color: 'error.main', py: 1.5 }}
         >
           登出

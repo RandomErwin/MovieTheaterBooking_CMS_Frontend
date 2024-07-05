@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 import MovieDetailShow from './MovieDetailShow';
+import dayjs from 'dayjs';
 
 const MovieCardSearch = ({movie}) => {
     const getURL = 'http://localhost:8080/movie/getMovie'
@@ -33,6 +34,10 @@ const MovieCardSearch = ({movie}) => {
 
     const posterSrc = movie.poster ? movie.poster : 'https://via.placeholder.com/400';
 
+    const formDate = (stingDate) => {
+        return dayjs(stingDate).format('YYYY-MM-DD');
+    }
+
     return (
     <div>
         {detailShow && (
@@ -44,7 +49,7 @@ const MovieCardSearch = ({movie}) => {
         )}
         <div className='movie'>
             <div>
-                <p>{movie.releaseDate}</p>
+                <p>{formDate(movie.releaseDate)}</p>
             </div>
             <div>
                 <img id={movie.id} src={posterSrc} alt={movie.title} onClick={imghandler}/>
