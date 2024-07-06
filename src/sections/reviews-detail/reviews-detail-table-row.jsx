@@ -143,8 +143,8 @@ export default function ReviewsDetailTableRow({
 
 ReviewsDetailTableRow.propTypes = {
   id: PropTypes.number.isRequired,
-  account: PropTypes.string.isRequired,
-  nickName: PropTypes.string.isRequired,
+  account: PropTypes.string,
+  nickName: PropTypes.string,
   score: PropTypes.number.isRequired,
   comment: PropTypes.string.isRequired,
   reviewDate: PropTypes.string.isRequired,

@@ -99,10 +99,11 @@ const MovieDetailShow = ({ show, onHide, data}) => {
                 body: formData,
             })
             console.log(res);
-            if(res.ok){
+            if(!res.ok){
+                alert("請放圖片");
+            } else {
                 setUploadModal(true);
             }
-            alert("請放圖片");
         } catch (error) {
             console.error('上傳失敗: ', error)
         }

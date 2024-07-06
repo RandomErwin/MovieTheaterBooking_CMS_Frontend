@@ -118,5 +118,5 @@ ReviewTableRow.propTypes = {
   poster: PropTypes.string.isRequired,
   selected: PropTypes.bool.isRequired,
   handleClick: PropTypes.func.isRequired,
-  onRowClick: PropTypes.func.isRequired,
+  onRowClick: PropTypes.func,
 };
