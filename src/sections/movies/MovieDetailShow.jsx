@@ -1,7 +1,8 @@
-import { Modal, Box, Typography, Grid, Button } from '@mui/material';
+import { Modal, Box, Typography, Grid, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle  } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import dayjs from 'dayjs';
+import './MovieDetailShow.css'
 
 const style = {
     position: 'absolute',
@@ -37,8 +38,9 @@ const style = {
 };
 
 const MovieDetailShow = ({ show, onHide, data}) => {
-    const [files, setFiles] = useState([null, null, null]);
-    const [previews, setPreviews] = useState([null, null, null]);
+    const [files, setFiles] = useState([]);
+    const [previews, setPreviews] = useState([]);
+    const [uploadModal, setUploadModal] = useState(false);
 
     const handleDragOver = (e) => {
         e.preventDefault();
@@ -78,6 +80,10 @@ const MovieDetailShow = ({ show, onHide, data}) => {
         } 
     };
 
+    const handleModalClose = () => {
+        setUploadModal(false);
+    }
+
     const handleUpload = async (movieId) => {
         const uploadURL = 'http://localhost:8080/still/upload';
         const formData = new FormData();
@@ -92,8 +98,11 @@ const MovieDetailShow = ({ show, onHide, data}) => {
                 method: 'POST',
                 body: formData,
             })
-            alert('上傳成功');
-
+            console.log(res);
+            if(res.ok){
+                setUploadModal(true);
+            }
+            alert("請放圖片");
         } catch (error) {
             console.error('上傳失敗: ', error)
         }
@@ -223,6 +232,24 @@ const MovieDetailShow = ({ show, onHide, data}) => {
                         ))}
                     </Grid>
                 )}
+
+                <Dialog
+                    open={uploadModal}
+                    onClose={handleModalClose}
+                    aria-labelledby="success-dialog-title"
+                    aria-describedby="success-dialog-description"
+                >
+                    <DialogContent>
+                        <DialogContentText id="success-dialog-description" className='dialog-content-text'>
+                            圖片上傳成功
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleModalClose} className='dialog-button' autoFocus>
+                            關閉
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </Box>
         </Modal>
     )
