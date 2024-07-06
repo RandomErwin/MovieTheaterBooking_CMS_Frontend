@@ -16,7 +16,7 @@ function NewMovies({ show, onHide }){
     const [language, setLanguage] = useState('');
     const [trailer, setTrailer] = useState('');
     const [poster, setPoster] = useState('');
-    const [isOutTheater, setOutTheater] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(false);
 
     function titleChangeHandler(e){
         setTitle(e.target.value);
@@ -52,7 +52,7 @@ function NewMovies({ show, onHide }){
         // 注意: file格式傳輸 e.target.files[0]
         const file = e.target.files[0];
         getBase64(file);
-        setOutTheater(false);
+        setIsPlaying(false);
     }
 
     const onLoad = fileString => {
@@ -75,7 +75,7 @@ function NewMovies({ show, onHide }){
         e.preventDefault();
         
         // 所有參數都必須包含在form submission => submitHandlers
-        // 即使是 isOutTheater 預設值=false 都必須放入包含在FormData
+        // 即使是 isPlaying 預設值=false 都必須放入包含在FormData
         const formData = new FormData();
         formData.append('title', title);
         formData.append('titleEnglish', titleEnglish);
@@ -88,7 +88,7 @@ function NewMovies({ show, onHide }){
         formData.append('language', language);
         formData.append('trailer', trailer);
         formData.append('poster', poster);
-        formData.append('isOutTheater', isOutTheater);
+        formData.append('isPlaying', isPlaying);
         
         try {
             // GET、POST、HEAD => 不帶自定義 Header => 視為簡單請求
@@ -126,11 +126,11 @@ function NewMovies({ show, onHide }){
                     <label htmlFor="rating">電影級別</label>
                     <select onChange={ratingChangeHandler} >
                         <option value="">選擇級別</option>
-                        <option value="general">普通級</option>
-                        <option value="protected">保護級</option>
-                        <option value="pg12">輔12級</option>
-                        <option value="pg15">輔15級</option>
-                        <option value="restricted">限制級</option>
+                        <option value="普通級">普通級</option>
+                        <option value="保護級">保護級</option>
+                        <option value="輔12級">輔12級</option>
+                        <option value="輔15級">輔15級</option>
+                        <option value="限制級">限制級</option>
                     </select>
                 </p>
                 <p>
@@ -141,21 +141,21 @@ function NewMovies({ show, onHide }){
                     <label htmlFor="genre">影片類型</label>
                     <select onChange={genreChangeHandler} >
                         <option value="">選擇類型</option>
-                        <option value="action">動作片</option>
-                        <option value="adventure">冒險片</option>
-                        <option value="animation">動畫片</option>
-                        <option value="comedy">喜劇片</option>
-                        <option value="crime">犯罪片</option>
-                        <option value="drama">戲劇片</option>
-                        <option value="fantasy">奇幻故事片</option>
-                        <option value="historical">歷史片</option>
-                        <option value="horror">恐怖片</option>
-                        <option value="mystery">懸疑片</option>
-                        <option value="philosophical">哲學片</option>
-                        <option value="political">政治片</option>
-                        <option value="romance">愛情片</option>
-                        <option value="science-fiction">科幻片</option>
-                        <option value="thriller">驚悚片</option>
+                        <option value="動作片">動作片</option>
+                        <option value="冒險片">冒險片</option>
+                        <option value="動畫片">動畫片</option>
+                        <option value="喜劇片">喜劇片</option>
+                        <option value="犯罪片">犯罪片</option>
+                        <option value="戲劇片">戲劇片</option>
+                        <option value="奇幻故事片">奇幻故事片</option>
+                        <option value="歷史片">歷史片</option>
+                        <option value="恐怖片">恐怖片</option>
+                        <option value="懸疑片">懸疑片</option>
+                        <option value="哲學片">哲學片</option>
+                        <option value="政治片">政治片</option>
+                        <option value="愛情片">愛情片</option>
+                        <option value="科幻片">科幻片</option>
+                        <option value="驚悚片">驚悚片</option>
                     </select>
                 </p>
                 <p>
@@ -174,9 +174,9 @@ function NewMovies({ show, onHide }){
                     <label htmlFor="language">語言</label>
                     <select onChange={languageChangeHandler} >
                         <option value="">選擇語言</option>
-                        <option value="chinese">中文</option>
-                        <option value="english">英文</option>
-                        <option value="japanese">日文</option>
+                        <option value="Chinese">中文</option>
+                        <option value="English">英文</option>
+                        <option value="Japanese">日文</option>
                     </select>
                 </p>
                 <p>
