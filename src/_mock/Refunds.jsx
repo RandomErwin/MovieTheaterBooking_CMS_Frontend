@@ -9,7 +9,6 @@ export const fetchRefunds = async () => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      credentials: 'include',
     });
     if(!res.ok){
       throw new Error(`HTTP 錯誤, Status: ${res.status}`);

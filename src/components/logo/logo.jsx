@@ -17,7 +17,7 @@ const Logo = forwardRef(({ disabledLink = false, sx, ...other }, ref) => {
       }}
       {...other}
     >
-      <img src='public/logo/TAISHOW_RB.png' alt='TaiShow'/>
+      <img src='/logo/TAISHOW_RB.png' alt='TaiShow'/>
     </Box>
   );
 

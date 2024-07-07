@@ -26,7 +26,7 @@ const MovieCardSearch = ({movie}) => {
     const isValidBase64 = (src) => {
         if(src == 'N/A') return false;
         try {
-            return btoa(atob(str.split(',')[1])).length > 0;
+            return btoa(atob(src.split(',')[1])).length > 0;
         } catch (error) {
             return false;
         }
@@ -34,8 +34,8 @@ const MovieCardSearch = ({movie}) => {
 
     const posterSrc = movie.poster ? movie.poster : 'https://via.placeholder.com/400';
 
-    const formDate = (stingDate) => {
-        return dayjs(stingDate).format('YYYY-MM-DD');
+    const formDate = (stringDate) => {
+        return dayjs(stringDate).format('YYYY-MM-DD');
     }
 
     return (

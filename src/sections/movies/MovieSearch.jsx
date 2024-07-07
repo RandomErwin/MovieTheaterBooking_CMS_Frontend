@@ -1,55 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import MovieCardSearch from './MovieCardSearch'
 import './Movies.css'
-import Cookies from 'js-cookie'
 
-const COMING_URL = 'http://localhost:8080/movie/getMovie/isComing'
-const RELEASE_URL = 'http://localhost:8080/movie/getMovie/isPlaying'
-
-const MovieSearch = () => {
-    const [moviesComing, setMoviesComing] = useState([]);
-    const [moviesRelease, setMoviesRelease] = useState([]);
+const MovieSearch = ({ moviesComing, moviesRelease }) => {
     const [showComingSoon, setShowComingSoon] = useState(true);
-
-    const searchMovies = async () => {
-        const token = Cookies.get('token');
-        if(!token){
-            alert("無使用權限");
-            return;
-        }
-        try {
-            const res = await fetch(COMING_URL, {
-                method: 'GET',
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-                credentials: 'include',
-            });
-            const dataComing = await res.json();
-
-            // 使用 Array.isArray檢查API返回的數據是否為陣列，否則設置為空陣列
-            setMoviesComing(Array.isArray(dataComing.data) ? dataComing.data : []);
-
-            const response = await fetch(RELEASE_URL, {
-                method: 'GET',
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-                credentials: 'include',
-            });
-            const dataRelease = await response.json();
-
-            setMoviesRelease(Array.isArray(dataRelease.data) ? dataRelease.data: []);
-
-        } catch (error) {
-            console.error("Error fetching movies", error);
-            setMoviesComing([]);
-            setMoviesRelease([]);
-        }
-    }
-    useEffect(() => {
-        searchMovies();
-    }, [])
 
     return (
         <div className='app'>

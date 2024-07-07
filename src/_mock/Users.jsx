@@ -13,7 +13,6 @@ export const fetchUsers = async () => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      credentials: 'include',
     });
     
     if(!res.ok){

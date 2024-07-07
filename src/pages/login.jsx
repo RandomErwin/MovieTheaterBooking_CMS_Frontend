@@ -30,26 +30,26 @@ const LoginPage = () => {
           account: account,
           passwd: passwd,
         }),
-        credentials: 'include',
       });
       
-      // read response test 作為 token => 設置token
+      // response.text() => 伺服器返回 JWT token  => 通常是純文字字串
       if(res.ok){
         const token = await res.text();
         Cookies.set('token', token, {expires: 1});
-
-        setTimeout(() => {
-          setLoading(false);
-          const redirectTo = location.state?.from?.pathname || '/movies';
-          navigate(redirectTo);
-        }, 1000);
         console.log('登入成功');
+
+        const redirectTo = location.state?.from?.pathname || '/movies';
+        navigate(redirectTo);
       }else {
         console.log('登入失敗', res.statusText);
+        alert('登入失敗，請檢查您的憑證');
       }
 
     } catch (error) {
-      console.error('錯誤 ', error);
+      console.error('網絡錯誤', error);
+      alert('網絡錯誤，請稍後再試。');
+    } finally {
+      setLoading(false);
     }
   }
 

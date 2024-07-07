@@ -56,7 +56,8 @@ const PaymentTableRow = ({
   const handleRefund = async () => {
     setLoading(true);
     try {
-      await axios.post(`http://localhost:8080/payment-records/${orderNum}`);
+      const res = await axios.post(`http://localhost:8080/payment-records/${orderNum}`);
+      console.log(res);
     } catch (error) {
       console.log(error);
     } finally {

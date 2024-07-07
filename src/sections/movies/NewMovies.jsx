@@ -3,7 +3,7 @@ import classes from './NewMovies.module.css'
 import axios from 'axios';
 import { Modal } from '@mui/material';
 
-function NewMovies({ show, onHide }){
+function NewMovies({ show, onHide, onAddMovie }){
 
     const [title, setTitle] = useState('');
     const [titleEnglish, setTitleEnglish] = useState('');
@@ -99,6 +99,7 @@ function NewMovies({ show, onHide }){
                 }
             });
             console.log(response);
+            onAddMovie(response.data);
             onHide(); 
         } catch (error) {
             console.log(error);

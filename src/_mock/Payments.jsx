@@ -14,7 +14,6 @@ export const fetchPayments = async () => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      credentials: 'include',
     });
 
     if(!res.ok){
