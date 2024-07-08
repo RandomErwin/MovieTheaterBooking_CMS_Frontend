@@ -91,7 +91,7 @@ export default function MoviesView() {
         moviesComing={moviesComing}
         moviesRelease={moviesRelease}/>
       
-      <MovieLayout />
+      {/* <MovieLayout /> */}
 
     </Container>
   );
