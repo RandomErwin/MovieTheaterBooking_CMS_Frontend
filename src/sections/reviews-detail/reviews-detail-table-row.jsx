@@ -54,7 +54,7 @@ export default function ReviewsDetailTableRow({
         tabIndex={-1}
         role="checkbox"
         selected={selected}
-        style={{ backgroundColor: isReport ? 'red' : 'inherit' }}
+        style={{ backgroundColor: isReport ? '#FF7575' : 'inherit' }}
       >
         <TableCell padding="checkbox">
           <Checkbox disableRipple checked={selected} onChange={(event) => handleClick(event, id)} />

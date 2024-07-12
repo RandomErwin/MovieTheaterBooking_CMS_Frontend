@@ -6,7 +6,7 @@ import Table from '@mui/material/Table';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import TableBody from '@mui/material/TableBody';
-import Typography from '@mui/material/Typography';
+import { Typography } from '@mui/material';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 import Iconify from 'src/components/iconify';

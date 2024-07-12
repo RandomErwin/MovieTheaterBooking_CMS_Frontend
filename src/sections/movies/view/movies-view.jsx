@@ -1,7 +1,7 @@
 import { useState,useEffect } from 'react';
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
+import { Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import Iconify from 'src/components/iconify';
 import NewMovies from '../NewMovies';

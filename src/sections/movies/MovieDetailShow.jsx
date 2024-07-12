@@ -1,5 +1,5 @@
-import { Modal, Box, Typography, Grid, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle  } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { Modal, Box, Typography, Grid, Button, Dialog, DialogActions, DialogContent, DialogContentText } from '@mui/material';
+import React, { useState } from 'react';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import './MovieDetailShow.css'
