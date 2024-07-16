@@ -22,13 +22,11 @@ export const fetchRefunds = async () => {
   }
 };
 
-export const getRefunds = (refundData) => {
-  return refundData.map((refund) => ({
+export const getRefunds = (refundData) => refundData.map((refund) => ({
     orderNum: refund.orderNum,
     account: refund.account,
     totalAmount: refund.totalAmount,
     bonus: refund.bonus,
     payway: refund.payway,
     payStatus: refund.payStatus,
-  }));
-};
+}));

@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
+
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
@@ -7,9 +10,8 @@ import { alpha } from '@mui/material/styles';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';  
+
 import { account } from 'src/_mock/account';
-import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
 
 export default function AccountPopover() {
   const [open, setOpen] = useState(null);
@@ -51,8 +53,7 @@ export default function AccountPopover() {
             height: 36,
             border: (theme) => `solid 2px ${theme.palette.background.default}`,
           }}
-        >
-        </Avatar>
+        />
       </IconButton>
 
       <Popover

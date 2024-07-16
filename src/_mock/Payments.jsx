@@ -28,8 +28,7 @@ export const fetchPayments = async () => {
   }
 };
 
-export const getPayments = (paymentData) => {
-  return paymentData.map((payment) => ({
+export const getPayments = (paymentData) => paymentData.map((payment) => ({
     orderNum: payment.orderNum,
     account: payment.account,
     totalAmount: payment.totalAmount,
@@ -38,5 +37,4 @@ export const getPayments = (paymentData) => {
     payStatus: payment.payStatus,
     showTime: payment.showTime,
     refunded: payment.refunded,
-  }));
-};
+}));

@@ -95,7 +95,7 @@ export default function RefundTableRow({
 
 RefundTableRow.propTypes = {
   orderNum: PropTypes.string.isRequired,
-  account: PropTypes.string.isRequired,
+  account: PropTypes.string,
   totalAmount: PropTypes.number.isRequired,
   bonus: PropTypes.number.isRequired,
   payway: PropTypes.string,

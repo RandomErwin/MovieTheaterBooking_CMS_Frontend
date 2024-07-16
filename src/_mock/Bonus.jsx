@@ -28,13 +28,11 @@ export const fetchBonus = async () => {
   }
 };
 
-export const getBonus = (bonusData) => {
-  return bonusData.map((bonus) => ({
+export const getBonus = (bonusData) => bonusData.map((bonus) => ({
     orderNum: bonus.orderNum,
     account: bonus.account,
     totalAmount: bonus.totalAmount,
     bonus: bonus.bonus,
     payway: bonus.payway,
     payStatus: bonus.payStatus,
-  }));
-};
+}));
